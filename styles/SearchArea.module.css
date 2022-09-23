@@ -1,0 +1,20 @@
+.wrapper {
+  display: flex;
+  max-height: 20rem;
+  min-width: 16rem;
+  border: 1px solid lightgray;
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 1rem;
+  background-color: lightsteelblue;
+}
+
+@media (max-width: 750px) {
+  .wrapper {
+    display: none;
+  }
+}
+
+.title {
+  margin: 0;
+}
