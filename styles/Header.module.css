@@ -1,0 +1,24 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  background-color: yellow;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  margin: 0 2rem;
+  max-width: 60rem;
+}
+
+.logoContainer {
+  cursor: pointer;
+}
+
+.navContainer {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  cursor: pointer;
+}
