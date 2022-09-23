@@ -6,7 +6,7 @@
   border-radius: 12px;
   padding: 1rem;
   margin: 1rem;
-  background-color: lightsteelblue;
+  background-color: rgb(231, 237, 247);
 }
 
 @media (max-width: 750px) {

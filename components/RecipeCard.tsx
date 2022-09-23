@@ -10,17 +10,22 @@ import {
 const RecipeCard = () => {
   return (
     <div className={styles.wrapper}>
-      <div className={styles.detailsContainer}>
-        <h1 className={styles.title}>Cheesy tuna melts</h1>
-        <h4 className={styles.author}>By Jack Radford</h4>
-        <p>A tasty change from cheese on toast!</p>
-        <span>30mins • 5 Ingredients • 23 Sep 2022</span>
+      <div className={styles.contentContainer}>
+        <div className={styles.detailsContainer}>
+          <h1 className={styles.title}>Cheesy tuna melts</h1>
+          <h4 className={styles.author}>By Jack Radford</h4>
+          <p>A tasty change from cheese on toast!</p>
+        </div>
+        <div className={styles.imageContainer}></div>
       </div>
-      <div className={styles.bookmarkContainer}>
-        <FiBookmark className={styles.bookmark} />
-        <div className={styles.ratingContainer}>
-          <FiThumbsUp className={styles.thumbsUp} />
-          <FiThumbsDown className={styles.thumbsDown} />
+      <div className={styles.footerContainer}>
+        <p className={styles.extraDetails}>30mins • Easy • 23 Sep 2022</p>
+        <div className={styles.actionsContainer}>
+          <FiBookmark className={styles.bookmark} />
+          <div className={styles.ratingContainer}>
+            <FiThumbsUp className={styles.thumbsUp} />
+            <FiThumbsDown className={styles.thumbsDown} />
+          </div>
         </div>
       </div>
     </div>
