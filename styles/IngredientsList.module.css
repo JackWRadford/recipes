@@ -1,0 +1,15 @@
+.wrapper {
+  border: 1px solid lightgray;
+  border-radius: 12px;
+  padding: 0 1rem;
+}
+
+@media (min-width: 700px) {
+  .wrapper {
+    max-width: 16rem;
+  }
+}
+
+.list {
+  padding: 0 1rem;
+}
