@@ -1,15 +1,20 @@
 .wrapper {
-  border: 1px solid lightgray;
   border-radius: 12px;
   padding: 0 1rem;
+  box-shadow: var(--shadow);
 }
 
 @media (min-width: 700px) {
   .wrapper {
-    max-width: 16rem;
+    width: 700px;
   }
 }
 
-.list {
-  padding: 0 1rem;
+.wrapper ul {
+  padding: 0;
+  list-style: none;
+}
+
+.wrapper li {
+  margin-top: 1rem;
 }

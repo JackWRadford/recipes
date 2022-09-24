@@ -2,11 +2,9 @@
   display: flex;
   max-height: 20rem;
   min-width: 16rem;
-  border: 1px solid lightgray;
   border-radius: 12px;
   padding: 1rem;
   margin: 1rem;
-  background-color: rgb(231, 237, 247);
 }
 
 @media (max-width: 750px) {
