@@ -2,6 +2,7 @@
   border-radius: 12px;
   padding: 0 1rem;
   box-shadow: var(--shadow);
+  border: 2px dashed black;
 }
 
 @media (min-width: 700px) {
