@@ -1,10 +1,9 @@
 .wrapper {
   display: flex;
-  max-height: 20rem;
+  flex-direction: column;
+  gap: 1rem;
   min-width: 16rem;
-  border-radius: 12px;
-  padding: 1rem;
-  margin: 1rem;
+  margin: 2rem 1rem 0 1rem;
 }
 
 @media (max-width: 750px) {
@@ -15,4 +14,5 @@
 
 .title {
   margin: 0;
+  padding-left: 0.5rem;
 }

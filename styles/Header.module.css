@@ -1,8 +1,9 @@
 .wrapper {
   display: flex;
   justify-content: center;
-  background-color: lightsteelblue;
-  border-bottom: 1px solid lightgray;
+  background-color: black;
+  color: white;
+  border-radius: 0 0 14px 14px;
 }
 
 .content {
