@@ -1,0 +1,11 @@
+.button {
+  padding: 1rem;
+  border: none;
+  border-radius: 14px;
+  color: white;
+  background-color: black;
+}
+
+.button:hover {
+  box-shadow: var(--shadow);
+}
