@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "../shared/Button";
 import SignUpModal from "./AuthModal";
+import styles from "../../styles/SignUpBtn.module.css";
 
 const SignUpBtn = () => {
   let [showModalState, setModalState] = useState(false);
@@ -21,6 +22,7 @@ const SignUpBtn = () => {
         name={"signup"}
         label={"Sign up"}
         onClick={clickHandler}
+        className={styles.button}
       />
     </>
   );

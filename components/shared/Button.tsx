@@ -5,12 +5,18 @@ interface ButtonProps {
   type: "button" | "submit" | "reset";
   name: string;
   label: string;
-  onClick: MouseEventHandler<HTMLButtonElement> | undefined;
+  onClick: MouseEventHandler<HTMLButtonElement>;
+  className?: string;
 }
 
-const Button: FC<ButtonProps> = ({ type, name, label, onClick }) => {
+const Button: FC<ButtonProps> = ({ type, name, label, onClick, className }) => {
   return (
-    <button className={styles.button} type={type} name={name} onClick={onClick}>
+    <button
+      className={`${styles.button} ${className}`}
+      type={type}
+      name={name}
+      onClick={onClick}
+    >
       {label}
     </button>
   );

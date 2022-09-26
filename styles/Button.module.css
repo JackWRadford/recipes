@@ -6,7 +6,3 @@
   background-color: black;
   cursor: pointer;
 }
-
-.button:hover {
-  box-shadow: var(--shadow);
-}
