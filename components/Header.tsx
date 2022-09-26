@@ -1,9 +1,14 @@
 import Link from "next/link";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 import styles from "../styles/Header.module.css";
 import LoginBtn from "./auth/LoginBtn";
+import LogoutBtn from "./auth/LogoutBtn";
 import SignUpBtn from "./auth/SignUpBtn";
 
 const Header = () => {
+  const user = useContext(AuthContext);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.content}>
@@ -13,8 +18,14 @@ const Header = () => {
           </div>
         </Link>
         <div className={styles.navContainer}>
-          <LoginBtn />
-          <SignUpBtn />
+          {!user ? (
+            <>
+              <LoginBtn />
+              <SignUpBtn />
+            </>
+          ) : (
+            <LogoutBtn />
+          )}
         </div>
       </div>
     </div>
