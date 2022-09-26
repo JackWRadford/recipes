@@ -1,5 +1,7 @@
 import Link from "next/link";
 import styles from "../styles/Header.module.css";
+import LoginBtn from "./auth/LoginBtn";
+import SignUpBtn from "./auth/SignUpBtn";
 
 const Header = () => {
   return (
@@ -11,8 +13,8 @@ const Header = () => {
           </div>
         </Link>
         <div className={styles.navContainer}>
-          <h4>Login</h4>
-          <h4>Sign up</h4>
+          <LoginBtn />
+          <SignUpBtn />
         </div>
       </div>
     </div>

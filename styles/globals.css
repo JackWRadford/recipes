@@ -1,5 +1,6 @@
 :root {
   --shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  --bgColor: rgb(246, 243, 243);
 }
 
 html,
@@ -25,6 +26,6 @@ a {
   }
   body {
     color: black;
-    background: rgb(246, 243, 243);
+    background: var(--bgColor);
   }
 }
