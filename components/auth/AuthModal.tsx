@@ -25,29 +25,39 @@ const AuthModal: FC<AuthModalProps> = ({ isSignUp, onClose }) => {
   const [password, setPassword] = useState("");
   /// Confirm password
   const [confirmPassword, setConfirmPassword] = useState("");
+
   /// Error message
   const [errorMessage, setErrorMessage] = useState("");
 
+  /// Loading
+  const [isLoading, setIsLoading] = useState(false);
+
   /// Either create new user account or login
   const submitHandler = async (event: React.FormEvent) => {
+    setIsLoading(true);
     event.preventDefault();
     try {
       if (isSignUp) {
         if (password === confirmPassword) {
           await createUserWithEmailAndPassword(auth, email, password);
+          setIsLoading(false);
           onClose();
         } else {
+          setIsLoading(false);
           setErrorMessage("Passwords must match");
         }
       } else {
         await signInWithEmailAndPassword(auth, email, password);
+        setIsLoading(false);
         onClose();
       }
     } catch (error) {
+      setIsLoading(false);
       if (error instanceof FirebaseError) {
         setErrorMessage(readableFromCode(error.code));
       }
     }
+    setIsLoading(false);
   };
 
   return (
@@ -92,6 +102,7 @@ const AuthModal: FC<AuthModalProps> = ({ isSignUp, onClose }) => {
               name={"signup"}
               label={isSignUp ? "Sign up" : "Log in"}
               onClick={() => {}}
+              isLoading={isLoading}
             />
           </div>
         </form>
