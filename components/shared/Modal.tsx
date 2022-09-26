@@ -24,7 +24,12 @@ const ModalOverlay: React.FC<ModalOverlayProps> = ({
     <div className={styles.modal}>
       <div className={styles.modalHeader}>
         <h2 className={styles.modalTitle}>{title}</h2>
-        <IoMdClose color="gray" size={24} onClick={onClose} />
+        <IoMdClose
+          className={styles.closeBtn}
+          color="gray"
+          size={24}
+          onClick={onClose}
+        />
       </div>
       {content}
     </div>
