@@ -1,0 +1,18 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 16rem;
+  margin: 2rem 1rem 0 1rem;
+}
+
+@media (max-width: 750px) {
+  .wrapper {
+    display: none;
+  }
+}
+
+.title {
+  margin: 0;
+  padding-left: 0.5rem;
+}

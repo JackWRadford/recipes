@@ -1,0 +1,11 @@
+.wrapper ul {
+  padding: 0;
+}
+
+.stepTitle {
+  margin: 0;
+}
+
+.stepContent {
+  margin: 0.5rem 0 2rem 0.5rem;
+}

@@ -1,0 +1,21 @@
+.wrapper {
+  border-radius: 12px;
+  padding: 0 1rem;
+  box-shadow: var(--shadow);
+  border: 2px dashed black;
+}
+
+@media (min-width: 700px) {
+  .wrapper {
+    width: 700px;
+  }
+}
+
+.wrapper ul {
+  padding: 0;
+  list-style: none;
+}
+
+.wrapper li {
+  margin-top: 1rem;
+}

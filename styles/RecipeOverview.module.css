@@ -1,0 +1,26 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 0 1rem;
+}
+
+.imageContainer {
+  width: 200px;
+  height: 200px;
+  background-color: rgb(235, 231, 231);
+  border-radius: 12px;
+}
+
+.title {
+  margin: 0;
+  padding: 1rem 0 0 0;
+  font-size: xx-large;
+}
+
+.author {
+  font-size: smaller;
+  font-weight: normal;
+  padding-top: 0.2rem;
+  margin: 0;
+}
