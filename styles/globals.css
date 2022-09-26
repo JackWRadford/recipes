@@ -1,5 +1,7 @@
 :root {
   --myYellow: yellow;
+  --myRed: rgb(255, 48, 48);
+  --myLightRed: rgb(255, 235, 235);
   --shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   --bgColor: rgb(246, 243, 243);
 }

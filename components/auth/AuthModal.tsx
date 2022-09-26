@@ -2,12 +2,15 @@ import React, { ChangeEvent, FC, useState } from "react";
 import Button from "../shared/Button";
 import Input from "../shared/Input";
 import Modal from "../shared/Modal";
-import styles from "../../styles/SignUpModal.module.css";
+import styles from "../../styles/AuthModal.module.css";
 import { auth } from "../../firebaseConfig";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import ErrorMsg from "../shared/ErrorMsg";
+import { FirebaseError } from "firebase/app";
+import { readableFromCode } from "../../helper/FirebaseErrors";
 
 interface AuthModalProps {
   isSignUp: boolean;
@@ -23,7 +26,7 @@ const AuthModal: FC<AuthModalProps> = ({ isSignUp, onClose }) => {
   /// Confirm password
   const [confirmPassword, setConfirmPassword] = useState("");
   /// Error message
-  const [errorMsg, setErrorMsg] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   /// Either create new user account or login
   const submitHandler = async (event: React.FormEvent) => {
@@ -32,15 +35,18 @@ const AuthModal: FC<AuthModalProps> = ({ isSignUp, onClose }) => {
       if (isSignUp) {
         if (password === confirmPassword) {
           await createUserWithEmailAndPassword(auth, email, password);
+          onClose();
         } else {
+          setErrorMessage("Passwords must match");
         }
-        onClose();
       } else {
         await signInWithEmailAndPassword(auth, email, password);
         onClose();
       }
     } catch (error) {
-      console.log(error);
+      if (error instanceof FirebaseError) {
+        setErrorMessage(readableFromCode(error.code));
+      }
     }
   };
 
@@ -80,6 +86,7 @@ const AuthModal: FC<AuthModalProps> = ({ isSignUp, onClose }) => {
                 }}
               />
             )}
+            {errorMessage && <ErrorMsg message={errorMessage} />}
             <Button
               type={"submit"}
               name={"signup"}

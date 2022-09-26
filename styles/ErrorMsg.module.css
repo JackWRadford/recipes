@@ -1,0 +1,13 @@
+.wrapper {
+  background-color: var(--myLightRed);
+  color: var(--myRed);
+  padding: 1rem;
+  border: 1px solid var(--myRed);
+  border-radius: 14px;
+}
+
+.wrapper p {
+  padding: 0;
+  margin: 0;
+  font-size: smaller;
+}
