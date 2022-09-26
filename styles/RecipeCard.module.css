@@ -5,8 +5,11 @@
   margin: 1rem 1rem 0 1rem;
   padding: 1rem 1rem 0 1rem;
   border-radius: 12px;
-  box-shadow: var(--shadow);
   background-color: white;
+}
+
+.wrapper:hover {
+  box-shadow: var(--shadow);
 }
 
 .contentContainer {
