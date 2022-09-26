@@ -18,10 +18,10 @@ const RecipeCard = () => {
           <p className={styles.extraDetails}>30mins • Easy • 23 Sep 2022</p>
           <div className={styles.actionsContainer}>
             <FiBookmark className={styles.bookmark} />
-            <div className={styles.ratingContainer}>
+            {/* <div className={styles.ratingContainer}>
               <FiThumbsUp className={styles.thumbsUp} />
               <FiThumbsDown className={styles.thumbsDown} />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
