@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { AuthProvider } from "../context/AuthContext";
+import { ListsProvider } from "../context/ListsContext";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -15,7 +16,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>Recipes</title>
       </Head>
       <AuthProvider>
-        <Component {...pageProps} />
+        <ListsProvider>
+          <Component {...pageProps} />
+        </ListsProvider>
       </AuthProvider>
     </>
   );
