@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import { AuthProvider } from "../context/AuthContext";
 import { ListsProvider } from "../context/ListsContext";
+import { RecipesProvider } from "../context/RecipesContext";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -16,9 +17,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>Recipes</title>
       </Head>
       <AuthProvider>
-        <ListsProvider>
-          <Component {...pageProps} />
-        </ListsProvider>
+        <RecipesProvider>
+          <ListsProvider>
+            <Component {...pageProps} />
+          </ListsProvider>
+        </RecipesProvider>
       </AuthProvider>
     </>
   );
