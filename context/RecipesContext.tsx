@@ -25,6 +25,7 @@ const RecipesProvider: FC<IRecipesProviderProps> = ({ children }) => {
       const recipesSnapshot = await getDocs(recipesCol);
       const recipesList = recipesSnapshot.docs.map((doc) => doc.data());
       setRecipes(recipesList);
+      console.log(recipesList);
       return recipesList;
     };
 

@@ -1,21 +1,33 @@
 import styles from "../styles/RecipeCard.module.css";
-import { FiBookmark, FiThumbsDown, FiThumbsUp } from "react-icons/fi";
+import { FiBookmark } from "react-icons/fi";
 import Link from "next/link";
+import { Recipe } from "../models/Recipe";
+import { FC } from "react";
+import { secondsToHoursMinutes } from "../helper/ConvertionHelpers";
 
-const RecipeCard = () => {
+interface IRecipeCardProps {
+  recipe: Recipe;
+}
+
+const RecipeCard: FC<IRecipeCardProps> = ({ recipe }) => {
   return (
     <Link href={"/recipe/123"}>
       <div className={styles.wrapper}>
         <div className={styles.contentContainer}>
           <div className={styles.detailsContainer}>
-            <h1 className={styles.title}>Cheesy tuna melts</h1>
-            <h4 className={styles.author}>By Jack Radford</h4>
-            <p>A tasty change from cheese on toast!</p>
+            <h1 className={styles.title}>{recipe.name}</h1>
+            <h4 className={styles.author}>{`By ${recipe.author}`}</h4>
+            <p>{recipe.description}</p>
           </div>
           <div className={styles.imageContainer}></div>
         </div>
         <div className={styles.footerContainer}>
-          <p className={styles.extraDetails}>30mins • Easy • 23 Sep 2022</p>
+          <p className={styles.extraDetails}>{`${secondsToHoursMinutes(
+            recipe.cookingTime
+          )} • ${recipe.difficulty} • ${recipe.dateCreated
+            .toDate()
+            .toISOString()
+            .substring(0, 10)}`}</p>
           <div className={styles.actionsContainer}>
             <FiBookmark className={styles.bookmark} />
             {/* <div className={styles.ratingContainer}>
