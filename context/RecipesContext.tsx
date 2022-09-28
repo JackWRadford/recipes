@@ -19,13 +19,13 @@ const RecipesProvider: FC<IRecipesProviderProps> = ({ children }) => {
   useEffect(() => {
     /// Get recipes from firestore
     const fetchRecipes = async () => {
+      console.log("FIRESTORE: fetchRecipes");
       const recipesCol = collection(db, "recipes").withConverter(
         recipeConverter
       );
       const recipesSnapshot = await getDocs(recipesCol);
       const recipesList = recipesSnapshot.docs.map((doc) => doc.data());
       setRecipes(recipesList);
-      console.log(recipesList);
       return recipesList;
     };
 

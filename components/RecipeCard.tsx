@@ -11,7 +11,7 @@ interface IRecipeCardProps {
 
 const RecipeCard: FC<IRecipeCardProps> = ({ recipe }) => {
   return (
-    <Link href={"/recipe/123"}>
+    <Link href={`/recipe/${recipe.id}`}>
       <div className={styles.wrapper}>
         <div className={styles.contentContainer}>
           <div className={styles.detailsContainer}>

@@ -1,15 +1,11 @@
+import { FC } from "react";
 import styles from "../../styles/IngredientsList.module.css";
 
-const ingredients: string[] = [
-  "200g can tuna , whatever type you've got in the cupboard",
-  "½ a bunch of spring onions , finely chopped",
-  "4 tbsp mayonnaise",
-  "3thick slices of granary or wholemeal bread",
-  "50g cheddar , coarsely grated",
-  "generous pinch of paprika",
-];
+interface IIngredientsProps {
+  ingredients: string[];
+}
 
-const IngredientsList = () => {
+const IngredientsList: FC<IIngredientsProps> = ({ ingredients }) => {
   const ingredientItems = ingredients.map((e, index) => (
     <li key={index}>{e}</li>
   ));
