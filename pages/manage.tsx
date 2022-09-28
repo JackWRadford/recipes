@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import DifficultySelector from "../components/manageRecipe/DifficultySelector";
 import DurationInput from "../components/manageRecipe/DurationInput";
 import ManageList from "../components/manageRecipe/ManageList";
+import Button from "../components/shared/Button";
 import Input from "../components/shared/Input";
 import Difficulty from "../enums/Difficulty";
 import styles from "../styles/ManagePage.module.css";
@@ -60,11 +61,21 @@ const ManagePage: NextPage = () => {
     setDuration(value);
   };
 
+  const onPublishHandler = async () => {};
+
   return (
     <>
       <Header />
       <div className={styles.wrapper}>
-        <h2>Create a recipe</h2>
+        <div className={styles.titleRow}>
+          <h2>Create a recipe</h2>
+          <Button
+            type={"button"}
+            name={"publish"}
+            label={"Publish"}
+            onClick={onPublishHandler}
+          />
+        </div>
         <Input
           type={"text"}
           name={"recipename"}

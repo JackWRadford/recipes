@@ -6,3 +6,15 @@
   gap: 1rem;
   padding: 0 1rem;
 }
+
+.titleRow {
+  margin: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.titleRow h2 {
+  margin: 0;
+  padding: 0;
+}
