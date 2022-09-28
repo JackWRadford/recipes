@@ -1,0 +1,35 @@
+.title {
+  margin: 0;
+  padding: 0;
+  margin-top: 1rem;
+}
+
+.addItem {
+  display: flex;
+  gap: 1rem;
+}
+
+.addItem Input {
+  flex: 1;
+}
+
+.itemList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: small;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.listItem Input {
+  flex: 1;
+}
+
+.closeBtn {
+  cursor: pointer;
+}
