@@ -1,8 +1,10 @@
 import type { NextPage } from "next";
 import { ChangeEvent, useState } from "react";
 import Header from "../components/Header";
+import DifficultySelector from "../components/manageRecipe/DifficultySelector";
 import ManageList from "../components/manageRecipe/ManageList";
 import Input from "../components/shared/Input";
+import Difficulty from "../enums/Difficulty";
 import styles from "../styles/ManagePage.module.css";
 
 const ManagePage: NextPage = () => {
@@ -10,6 +12,7 @@ const ManagePage: NextPage = () => {
   const [description, setDescription] = useState("");
   const [ingredients, setIngredients] = useState<string[]>([]);
   const [steps, setSteps] = useState<string[]>([]);
+  const [difficulty, setDifficulty] = useState(Difficulty.easy);
 
   const onAddIngredientHandler = (ingredientValue: string) => {
     setIngredients((oldList) => {
@@ -47,6 +50,10 @@ const ManagePage: NextPage = () => {
     });
   };
 
+  const onSetDifficultyHandler = (value: Difficulty) => {
+    setDifficulty(value);
+  };
+
   return (
     <>
       <Header />
@@ -70,6 +77,10 @@ const ManagePage: NextPage = () => {
             setDescription(event.currentTarget.value);
           }}
         />
+        <DifficultySelector
+          difficulty={difficulty}
+          setDifficulty={onSetDifficultyHandler}
+        />
         <ManageList
           listTitle={"Ingredients"}
           placeholder={"Add an ingredient (e.g. 100g chocolate)"}
@@ -79,7 +90,6 @@ const ManagePage: NextPage = () => {
           onChange={onChangeIngredientHandler}
           onRemove={onRemoveIngredientHandler}
         />
-
         <ManageList
           listTitle={"Instructions"}
           placeholder={"Add a step (e.g. Pre-heat oven to 100 degrees celcius)"}
