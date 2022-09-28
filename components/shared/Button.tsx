@@ -6,7 +6,7 @@ interface ButtonProps {
   type: "button" | "submit" | "reset";
   name: string;
   label: string;
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   className?: string;
   isLoading?: boolean;
 }

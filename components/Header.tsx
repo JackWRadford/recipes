@@ -6,6 +6,7 @@ import styles from "../styles/Header.module.css";
 import LoginBtn from "./auth/LoginBtn";
 import LogoutBtn from "./auth/LogoutBtn";
 import SignUpBtn from "./auth/SignUpBtn";
+import AddRecipeBtn from "./user/addRecipeBtn";
 import UserRecipesBtn from "./user/userRecipesBtn";
 import UserSavedRecipesBtn from "./user/userSavedRecipesBtn";
 
@@ -36,6 +37,7 @@ const Header = () => {
               <UserSavedRecipesBtn />
               <UserRecipesBtn />
               <LogoutBtn />
+              <AddRecipeBtn />
             </>
           )}
         </div>

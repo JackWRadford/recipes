@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "../shared/Button";
 import SignUpModal from "./AuthModal";
-import styles from "../../styles/SignUpBtn.module.css";
+import styles from "../../styles/CallToActionBtn.module.css";
 
 const SignUpBtn = () => {
   let [showModalState, setModalState] = useState(false);
