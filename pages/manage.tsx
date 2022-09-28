@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import { ChangeEvent, useState } from "react";
 import Header from "../components/Header";
 import DifficultySelector from "../components/manageRecipe/DifficultySelector";
+import DurationInput from "../components/manageRecipe/DurationInput";
 import ManageList from "../components/manageRecipe/ManageList";
 import Input from "../components/shared/Input";
 import Difficulty from "../enums/Difficulty";
@@ -13,6 +14,7 @@ const ManagePage: NextPage = () => {
   const [ingredients, setIngredients] = useState<string[]>([]);
   const [steps, setSteps] = useState<string[]>([]);
   const [difficulty, setDifficulty] = useState(Difficulty.easy);
+  const [duration, setDuration] = useState(600);
 
   const onAddIngredientHandler = (ingredientValue: string) => {
     setIngredients((oldList) => {
@@ -54,6 +56,10 @@ const ManagePage: NextPage = () => {
     setDifficulty(value);
   };
 
+  const onSetDurationHandler = (value: number) => {
+    setDuration(value);
+  };
+
   return (
     <>
       <Header />
@@ -77,10 +83,7 @@ const ManagePage: NextPage = () => {
             setDescription(event.currentTarget.value);
           }}
         />
-        <DifficultySelector
-          difficulty={difficulty}
-          setDifficulty={onSetDifficultyHandler}
-        />
+
         <ManageList
           listTitle={"Ingredients"}
           placeholder={"Add an ingredient (e.g. 100g chocolate)"}
@@ -99,6 +102,11 @@ const ManagePage: NextPage = () => {
           onChange={onChangeStepHandler}
           onRemove={onRemoveStepHandler}
         />
+        <DifficultySelector
+          difficulty={difficulty}
+          setDifficulty={onSetDifficultyHandler}
+        />
+        <DurationInput seconds={duration} setSeconds={onSetDurationHandler} />
       </div>
     </>
   );
