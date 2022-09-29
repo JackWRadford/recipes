@@ -19,6 +19,8 @@ interface AuthModalProps {
 
 /// For sign up and sign in
 const AuthModal: FC<AuthModalProps> = ({ isSignUp, onClose }) => {
+  /// Display name
+  const [displayName, setDisplayName] = useState("");
   /// Email
   const [email, setEmail] = useState("");
   /// Password
@@ -38,6 +40,11 @@ const AuthModal: FC<AuthModalProps> = ({ isSignUp, onClose }) => {
     event.preventDefault();
     try {
       if (isSignUp) {
+        if (!displayName.trim()) {
+          setIsLoading(false);
+          setErrorMessage("Please enter a display name");
+          return;
+        }
         if (password === confirmPassword) {
           await createUserWithEmailAndPassword(auth, email, password);
           setIsLoading(false);
@@ -67,6 +74,17 @@ const AuthModal: FC<AuthModalProps> = ({ isSignUp, onClose }) => {
       content={
         <form onSubmit={submitHandler}>
           <div className={styles.contentWrapper}>
+            {isSignUp && (
+              <Input
+                type={"text"}
+                name={"displayname"}
+                value={displayName}
+                placeholder={"Display name"}
+                onChange={(event: ChangeEvent<HTMLInputElement>): void => {
+                  setDisplayName(event.currentTarget.value);
+                }}
+              />
+            )}
             <Input
               type={"email"}
               name={"email"}
