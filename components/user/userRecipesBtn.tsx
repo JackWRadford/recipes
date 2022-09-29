@@ -1,20 +1,15 @@
-import { useContext } from "react";
-import { Lists, ListsContext } from "../../context/ListsContext";
+import { useRouter } from "next/router";
 import Button from "../shared/Button";
 
 const UserRecipesBtn = () => {
-  const listsCtx = useContext(ListsContext);
-
-  const clickHandler = () => {
-    listsCtx.onChangeList(Lists.users);
-  };
+  const router = useRouter();
 
   return (
     <Button
       type={"button"}
       name={"yourrecipes"}
       label={"Your Recipes"}
-      onClick={clickHandler}
+      onClick={() => router.push("/published")}
     />
   );
 };
