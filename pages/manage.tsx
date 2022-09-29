@@ -1,3 +1,5 @@
+import { FirebaseError } from "firebase/app";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore/lite";
 import type { NextPage } from "next";
 import { ChangeEvent, useContext, useState } from "react";
 import AuthBarrier from "../components/auth/AuthBarrier";
@@ -6,19 +8,25 @@ import DifficultySelector from "../components/manageRecipe/DifficultySelector";
 import DurationInput from "../components/manageRecipe/DurationInput";
 import ManageList from "../components/manageRecipe/ManageList";
 import Button from "../components/shared/Button";
+import ErrorMsg from "../components/shared/ErrorMsg";
 import Input from "../components/shared/Input";
 import { AuthContext } from "../context/AuthContext";
 import Difficulty from "../enums/Difficulty";
+import { db } from "../firebaseConfig";
+import { readableFromCode } from "../helper/FirebaseErrors";
+import { Recipe, recipeConverter } from "../models/Recipe";
 import styles from "../styles/ManagePage.module.css";
 
 const ManagePage: NextPage = () => {
   const userCtx = useContext(AuthContext);
+  const [error, setError] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [ingredients, setIngredients] = useState<string[]>([]);
   const [steps, setSteps] = useState<string[]>([]);
   const [difficulty, setDifficulty] = useState(Difficulty.easy);
   const [duration, setDuration] = useState(600);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onAddIngredientHandler = (ingredientValue: string) => {
     setIngredients((oldList) => {
@@ -64,7 +72,55 @@ const ManagePage: NextPage = () => {
     setDuration(value);
   };
 
-  const onPublishHandler = async () => {};
+  /// Add recipe to recipes collection
+  const onPublishHandler = async () => {
+    setError("");
+    if (!name) {
+      setError("Please enter a name");
+      return;
+    }
+    if (!description) {
+      setError("Please enter a description");
+      return;
+    }
+    if (!ingredients.length) {
+      setError("Please add at least one ingredient");
+      return;
+    }
+    if (!steps.length) {
+      setError("Please add at least one instruction");
+      return;
+    }
+    if (userCtx) {
+      const newRecipe: Recipe = new Recipe(
+        name,
+        userCtx.uid,
+        description,
+        duration,
+        difficulty,
+        ingredients,
+        steps,
+        "",
+        serverTimestamp()
+      );
+      try {
+        setIsLoading(true);
+        const id = await addDoc(
+          collection(db, "recipes").withConverter(recipeConverter),
+          newRecipe
+        );
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+        if (error instanceof FirebaseError) {
+          setError(readableFromCode(error.code));
+        } else {
+          setError("Something went wrong");
+        }
+      }
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
@@ -78,8 +134,10 @@ const ManagePage: NextPage = () => {
               name={"publish"}
               label={"Publish"}
               onClick={onPublishHandler}
+              isLoading={isLoading}
             />
           </div>
+          {error && <ErrorMsg message={error} />}
           <Input
             type={"text"}
             name={"recipename"}
