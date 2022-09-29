@@ -7,6 +7,7 @@ import { auth } from "../../firebaseConfig";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import ErrorMsg from "../shared/ErrorMsg";
 import { FirebaseError } from "firebase/app";
@@ -46,7 +47,12 @@ const AuthModal: FC<AuthModalProps> = ({ isSignUp, onClose }) => {
           return;
         }
         if (password === confirmPassword) {
-          await createUserWithEmailAndPassword(auth, email, password);
+          const credential = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+          await updateProfile(credential.user, { displayName: displayName });
           setIsLoading(false);
           onClose();
         } else {

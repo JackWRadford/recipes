@@ -5,7 +5,6 @@ import styles from "../styles/RecipesList.module.css";
 import RecipeCard from "./RecipeCard";
 
 const RecipesList = () => {
-  const userCtx = useContext(AuthContext);
   const recipesCtx = useContext(RecipesContext);
 
   return (

@@ -9,6 +9,7 @@ class Recipe {
   constructor(
     readonly name: string,
     readonly author: string,
+    readonly userId: string,
     readonly description: string,
     readonly cookingTime: number,
     readonly difficulty: Difficulty,
@@ -26,6 +27,7 @@ const recipeConverter = {
     return {
       name: recipe.name,
       author: recipe.author,
+      userId: recipe.userId,
       description: recipe.description,
       cookingTime: recipe.cookingTime,
       difficulty: recipe.difficulty,
@@ -40,6 +42,7 @@ const recipeConverter = {
     return new Recipe(
       data.name,
       data.author,
+      data.userId,
       data.description,
       data.cookingTime,
       data.difficulty,

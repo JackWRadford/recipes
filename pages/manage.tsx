@@ -94,6 +94,7 @@ const ManagePage: NextPage = () => {
     if (userCtx) {
       const newRecipe: Recipe = new Recipe(
         name,
+        userCtx.displayName ?? "Anonymous",
         userCtx.uid,
         description,
         duration,
