@@ -1,8 +1,14 @@
 import { signOut } from "firebase/auth";
+import { FC } from "react";
+import { FiLogOut } from "react-icons/fi";
 import { auth } from "../../firebaseConfig";
 import Button from "../shared/Button";
 
-const LogoutBtn = () => {
+interface ILogoutBtnProps {
+  isMobile: boolean;
+}
+
+const LogoutBtn: FC<ILogoutBtnProps> = ({ isMobile }) => {
   /// Sign out current user
   const clickHandler = async () => {
     try {
@@ -12,15 +18,15 @@ const LogoutBtn = () => {
     }
   };
 
-  return (
-    <>
-      <Button
-        type={"button"}
-        name={"logout"}
-        label={"Logout"}
-        onClick={clickHandler}
-      />
-    </>
+  return isMobile ? (
+    <FiLogOut onClick={clickHandler} />
+  ) : (
+    <Button
+      type={"button"}
+      name={"logout"}
+      label={"Logout"}
+      onClick={clickHandler}
+    />
   );
 };
 

@@ -1,14 +1,22 @@
 import { useRouter } from "next/router";
+import { FC } from "react";
+import { FiList } from "react-icons/fi";
 import Button from "../shared/Button";
 
-const UserRecipesBtn = () => {
+interface IUserRecipesBtnProps {
+  isMobile: boolean;
+}
+
+const UserRecipesBtn: FC<IUserRecipesBtnProps> = ({ isMobile }) => {
   const router = useRouter();
 
-  return (
+  return isMobile ? (
+    <FiList onClick={() => router.push("/published")} />
+  ) : (
     <Button
       type={"button"}
       name={"yourrecipes"}
-      label={"Your Recipes"}
+      label={"Published"}
       onClick={() => router.push("/published")}
     />
   );
