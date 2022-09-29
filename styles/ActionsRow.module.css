@@ -1,0 +1,11 @@
+.wrapper {
+  padding-bottom: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.wrapper Button {
+  background-color: white;
+  color: black;
+}

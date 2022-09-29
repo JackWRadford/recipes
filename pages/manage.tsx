@@ -1,7 +1,14 @@
 import { FirebaseError } from "firebase/app";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore/lite";
-import type { NextPage } from "next";
-import { ChangeEvent, useContext, useState } from "react";
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore/lite";
+import { WithRouterProps } from "next/dist/client/with-router";
+import { withRouter } from "next/router";
+import { ChangeEvent, FC, useContext, useState } from "react";
 import AuthBarrier from "../components/auth/AuthBarrier";
 import Header from "../components/Header";
 import DifficultySelector from "../components/manageRecipe/DifficultySelector";
@@ -17,15 +24,31 @@ import { readableFromCode } from "../helper/FirebaseErrors";
 import { Recipe, recipeConverter } from "../models/Recipe";
 import styles from "../styles/ManagePage.module.css";
 
-const ManagePage: NextPage = () => {
+interface IManagePageProps {
+  router: { query: { recipe: string } };
+}
+
+const ManagePage: FC<IManagePageProps & WithRouterProps> = ({ router }) => {
+  const recipe: Recipe | null = router.query.recipe
+    ? JSON.parse(router.query.recipe)
+    : null;
+
   const userCtx = useContext(AuthContext);
   const [error, setError] = useState("");
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [ingredients, setIngredients] = useState<string[]>([]);
-  const [steps, setSteps] = useState<string[]>([]);
-  const [difficulty, setDifficulty] = useState(Difficulty.easy);
-  const [duration, setDuration] = useState(600);
+  const [name, setName] = useState(recipe ? recipe.name : "");
+  const [description, setDescription] = useState(
+    recipe ? recipe.description : ""
+  );
+  const [ingredients, setIngredients] = useState<string[]>(
+    recipe ? recipe.ingredients : []
+  );
+  const [steps, setSteps] = useState<string[]>(
+    recipe ? recipe.instructions : []
+  );
+  const [difficulty, setDifficulty] = useState(
+    recipe ? recipe.difficulty : Difficulty.easy
+  );
+  const [duration, setDuration] = useState(recipe ? recipe.cookingTime : 600);
   const [isLoading, setIsLoading] = useState(false);
 
   const onAddIngredientHandler = (ingredientValue: string) => {
@@ -92,6 +115,7 @@ const ManagePage: NextPage = () => {
       return;
     }
     if (userCtx) {
+      // Set id to current recipe id if editing (recipe is not null)
       const newRecipe: Recipe = new Recipe(
         name,
         userCtx.displayName ?? "Anonymous",
@@ -102,16 +126,27 @@ const ManagePage: NextPage = () => {
         ingredients,
         steps,
         "",
-        serverTimestamp()
+        serverTimestamp(),
+        recipe ? recipe.id : undefined
       );
       try {
         setIsLoading(true);
-        const id = await addDoc(
-          collection(db, "recipes").withConverter(recipeConverter),
-          newRecipe
-        );
+        if (!recipe) {
+          // Add new recipe
+          await addDoc(
+            collection(db, "recipes").withConverter(recipeConverter),
+            newRecipe
+          );
+        } else {
+          // Update given recipe
+          const docRef = doc(db, "recipes", recipe.id!).withConverter(
+            recipeConverter
+          );
+          await setDoc(docRef, newRecipe, { merge: true });
+        }
         setIsLoading(false);
       } catch (error) {
+        console.log(error);
         setIsLoading(false);
         if (error instanceof FirebaseError) {
           setError(readableFromCode(error.code));
@@ -129,7 +164,7 @@ const ManagePage: NextPage = () => {
       {userCtx ? (
         <div className={styles.wrapper}>
           <div className={styles.titleRow}>
-            <h2>Create a recipe</h2>
+            <h2>{recipe ? "Edit recipe" : "Create a recipe"}</h2>
             <Button
               type={"button"}
               name={"publish"}
@@ -191,4 +226,4 @@ const ManagePage: NextPage = () => {
   );
 };
 
-export default ManagePage;
+export default withRouter(ManagePage);
