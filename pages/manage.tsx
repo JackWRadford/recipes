@@ -126,7 +126,7 @@ const ManagePage: NextPage = () => {
           <DurationInput seconds={duration} setSeconds={onSetDurationHandler} />
         </div>
       ) : (
-        <AuthBarrier />
+        <AuthBarrier label={"create a recipe"} />
       )}
     </>
   );

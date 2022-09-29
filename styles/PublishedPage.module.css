@@ -1,0 +1,7 @@
+.contentWrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  max-width: 60rem;
+  padding: 0 1rem;
+}

@@ -1,11 +1,14 @@
+import { FC } from "react";
 import styles from "../../styles/AuthBarrier.module.css";
-import LoginBtn from "./LoginBtn";
-import SignUpBtn from "./SignUpBtn";
 
-const AuthBarrier = () => {
+interface IAuthBarrier {
+  label: string;
+}
+
+const AuthBarrier: FC<IAuthBarrier> = ({ label }) => {
   return (
     <div className={styles.wrapper}>
-      <h4>Login or Sign up to create a recipe</h4>
+      <h4>{`Login or Sign up to ${label}`}</h4>
     </div>
   );
 };
