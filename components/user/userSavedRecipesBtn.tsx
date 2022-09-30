@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { FC } from "react";
-import { FiBookmark } from "react-icons/fi";
+import { FaBookmark } from "react-icons/fa";
 import Button from "../shared/Button";
 
 interface IUserSaveRecipesBtnProps {
@@ -11,7 +11,7 @@ const UserSavedRecipesBtn: FC<IUserSaveRecipesBtnProps> = ({ isMobile }) => {
   const router = useRouter();
 
   return isMobile ? (
-    <FiBookmark onClick={() => router.push("/favourites")} />
+    <FaBookmark onClick={() => router.push("/favourites")} />
   ) : (
     <Button
       type={"button"}
