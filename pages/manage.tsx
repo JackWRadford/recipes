@@ -33,7 +33,7 @@ const ManagePage: FC<IManagePageProps & WithRouterProps> = ({ router }) => {
     ? JSON.parse(router.query.recipe)
     : null;
 
-  const userCtx = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [error, setError] = useState("");
   const [name, setName] = useState(recipe ? recipe.name : "");
   const [description, setDescription] = useState(
@@ -114,12 +114,12 @@ const ManagePage: FC<IManagePageProps & WithRouterProps> = ({ router }) => {
       setError("Please add at least one instruction");
       return;
     }
-    if (userCtx) {
+    if (user) {
       // Set id to current recipe id if editing (recipe is not null)
       const newRecipe: Recipe = new Recipe(
         name,
-        userCtx.displayName ?? "Anonymous",
-        userCtx.uid,
+        user.displayName ?? "Anonymous",
+        user.uid,
         description,
         duration,
         difficulty,
@@ -161,7 +161,7 @@ const ManagePage: FC<IManagePageProps & WithRouterProps> = ({ router }) => {
   return (
     <>
       <Header />
-      {userCtx ? (
+      {user ? (
         <div className={styles.wrapper}>
           <div className={styles.titleRow}>
             <h2>{recipe ? "Edit recipe" : "Create a recipe"}</h2>

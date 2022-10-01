@@ -10,7 +10,7 @@ import UserRecipesBtn from "./user/userRecipesBtn";
 import UserSavedRecipesBtn from "./user/userSavedRecipesBtn";
 
 const Header = () => {
-  const userCtx = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const Header = () => {
           </div>
         </Link>
         <div className={styles.navContainer}>
-          {!userCtx ? (
+          {!user ? (
             <>
               <LoginBtn />
               <SignUpBtn />

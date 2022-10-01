@@ -15,7 +15,7 @@ import styles from "../../styles/RecipePage.module.css";
 const RecipePage: NextPage = () => {
   const [recipe, setRecipe] = useState<Recipe>();
   const router = useRouter();
-  const authCtx = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     console.log("FIRESTORE: fetchRecipe");
@@ -32,9 +32,7 @@ const RecipePage: NextPage = () => {
       <Header />
       {recipe && (
         <div className={styles.wrapper}>
-          {authCtx && authCtx.uid === recipe.userId && (
-            <ActionsRow recipe={recipe} />
-          )}
+          {user && user.uid === recipe.userId && <ActionsRow recipe={recipe} />}
           <RecipeOverview recipe={recipe} />
           <div className={styles.contentWrapper}>
             <IngredientsList ingredients={recipe?.ingredients} />

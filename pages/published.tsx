@@ -10,17 +10,17 @@ import { Recipe, recipeConverter } from "../models/Recipe";
 import styles from "../styles/PublishedPage.module.css";
 
 const PublishedPage: NextPage = () => {
-  const authCtx = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [published, setPublished] = useState<Recipe[]>([]);
 
   useEffect(() => {
     const fetchPublished = async () => {
-      if (!authCtx) return;
+      if (!user) return;
       console.log("FIRESTORE: fetchPublished");
       const recipesRef = collection(db, "recipes").withConverter(
         recipeConverter
       );
-      const q = query(recipesRef, where("userId", "==", authCtx?.uid));
+      const q = query(recipesRef, where("userId", "==", user?.uid));
       const recipesSnapshot = await getDocs(q);
       const recipesList = recipesSnapshot.docs.map((doc) => doc.data());
       setPublished(recipesList);
@@ -28,12 +28,12 @@ const PublishedPage: NextPage = () => {
     };
 
     fetchPublished();
-  }, [authCtx]);
+  }, [user]);
 
   return (
     <>
       <Header />
-      {authCtx ? (
+      {user ? (
         <div className={styles.contentWrapper}>
           <h2>Your recipes</h2>
           <RecipesList recipes={published} />

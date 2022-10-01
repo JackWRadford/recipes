@@ -3,7 +3,7 @@ import Button from "../shared/Button";
 import Input from "../shared/Input";
 import Modal from "../shared/Modal";
 import styles from "../../styles/AuthModal.module.css";
-import { auth } from "../../firebaseConfig";
+import { auth, db } from "../../firebaseConfig";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -12,6 +12,7 @@ import {
 import ErrorMsg from "../shared/ErrorMsg";
 import { FirebaseError } from "firebase/app";
 import { readableFromCode } from "../../helper/FirebaseErrors";
+import { collection, doc, setDoc } from "firebase/firestore/lite";
 
 interface AuthModalProps {
   isSignUp: boolean;
@@ -41,6 +42,7 @@ const AuthModal: FC<AuthModalProps> = ({ isSignUp, onClose }) => {
     event.preventDefault();
     try {
       if (isSignUp) {
+        // Sign up
         if (!displayName.trim()) {
           setIsLoading(false);
           setErrorMessage("Please enter a display name");
@@ -52,7 +54,14 @@ const AuthModal: FC<AuthModalProps> = ({ isSignUp, onClose }) => {
             email,
             password
           );
+          // Add display name to user profile
           await updateProfile(credential.user, { displayName: displayName });
+          // Create user doc in users collection
+          const docRef = doc(db, "users", credential.user.uid);
+          await setDoc(docRef, {
+            email: email,
+            favourites: [],
+          });
           setIsLoading(false);
           onClose();
         } else {
@@ -60,6 +69,7 @@ const AuthModal: FC<AuthModalProps> = ({ isSignUp, onClose }) => {
           setErrorMessage("Passwords must match");
         }
       } else {
+        // Sign in
         await signInWithEmailAndPassword(auth, email, password);
         setIsLoading(false);
         onClose();
