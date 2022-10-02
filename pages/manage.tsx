@@ -10,6 +10,7 @@ import { WithRouterProps } from "next/dist/client/with-router";
 import { withRouter } from "next/router";
 import { ChangeEvent, FC, useContext, useState } from "react";
 import AuthBarrier from "../components/auth/AuthBarrier";
+import Footer from "../components/Footer";
 import Header from "../components/Header";
 import DifficultySelector from "../components/manageRecipe/DifficultySelector";
 import DurationInput from "../components/manageRecipe/DurationInput";
@@ -222,6 +223,7 @@ const ManagePage: FC<IManagePageProps & WithRouterProps> = ({ router }) => {
       ) : (
         <AuthBarrier label={"create a recipe"} />
       )}
+      <Footer />
     </>
   );
 };

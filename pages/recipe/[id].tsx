@@ -2,6 +2,7 @@ import { doc, getDoc } from "firebase/firestore/lite";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
+import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import ActionsRow from "../../components/recipePage/ActionsRow";
 import IngredientsList from "../../components/recipePage/IngredientsList";
@@ -40,6 +41,7 @@ const RecipePage: NextPage = () => {
           </div>
         </div>
       )}
+      <Footer />
     </div>
   );
 };

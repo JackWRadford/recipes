@@ -2,6 +2,7 @@ import { collection, getDocs, query, where } from "firebase/firestore/lite";
 import { NextPage } from "next";
 import { useContext, useEffect, useState } from "react";
 import AuthBarrier from "../components/auth/AuthBarrier";
+import Footer from "../components/Footer";
 import Header from "../components/Header";
 import RecipesList from "../components/RecipesList";
 import { AuthContext } from "../context/AuthContext";
@@ -41,6 +42,7 @@ const PublishedPage: NextPage = () => {
       ) : (
         <AuthBarrier label={"see your recipes"} />
       )}
+      <Footer />
     </>
   );
 };

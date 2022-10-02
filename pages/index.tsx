@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import { useContext } from "react";
+import Footer from "../components/Footer";
 import Header from "../components/Header";
 import RecipesList from "../components/RecipesList";
 import SearchArea from "../components/SearchArea";
@@ -16,6 +17,7 @@ const HomePage: NextPage = () => {
         <RecipesList recipes={recipesCtx.recipes} />
         <SearchArea />
       </div>
+      <Footer />
     </>
   );
 };
