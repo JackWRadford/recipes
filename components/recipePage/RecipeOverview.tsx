@@ -14,7 +14,7 @@ const RecipeOverview: FC<IRecipeOverviewProps> = ({ recipe }) => {
         <h4 className={styles.author}>{`By ${recipe.author}`}</h4>
         <p>{recipe.description}</p>
       </div>
-      <div className={styles.imageContainer}></div>
+      {/* <div className={styles.imageContainer}></div> */}
     </div>
   );
 };

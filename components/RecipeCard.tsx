@@ -42,7 +42,7 @@ const RecipeCard: FC<IRecipeCardProps> = ({ recipe }) => {
             <h4 className={styles.author}>{`By ${recipe.author}`}</h4>
             <p>{recipe.description}</p>
           </div>
-          <div className={styles.imageContainer}></div>
+          {/* <div className={styles.imageContainer}></div> */}
         </div>
         <div className={styles.footerContainer}>
           <p className={styles.extraDetails}>{`${secondsToHoursMinutes(
