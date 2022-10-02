@@ -1,15 +1,38 @@
 import styles from "../styles/RecipeCard.module.css";
-import { FiBookmark } from "react-icons/fi";
+import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import Link from "next/link";
 import { Recipe } from "../models/Recipe";
-import { FC } from "react";
+import React, { FC, MouseEventHandler, useContext } from "react";
 import { secondsToHoursMinutes } from "../helper/ConvertionHelpers";
+import { AuthContext } from "../context/AuthContext";
+import { doc, getDoc, setDoc } from "firebase/firestore/lite";
+import { db } from "../firebaseConfig";
 
 interface IRecipeCardProps {
   recipe: Recipe;
 }
 
 const RecipeCard: FC<IRecipeCardProps> = ({ recipe }) => {
+  const { user, favs, setFavs } = useContext(AuthContext);
+
+  /// toggle recipe favourite
+  const onFavouriteHandler = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!user) return;
+    const index = favs.indexOf(recipe.id!, 0);
+    const newFavs = [...favs];
+    if (index > -1) {
+      newFavs.splice(index, 1);
+    } else {
+      newFavs.push(recipe.id!);
+    }
+    // Update database
+    const docRef = doc(db, "users", user!.uid);
+    await setDoc(docRef, { favourites: newFavs }, { merge: true });
+    // Update locally
+    setFavs(newFavs);
+  };
+
   return (
     <Link href={`/recipe/${recipe.id}`}>
       <div className={styles.wrapper}>
@@ -29,7 +52,17 @@ const RecipeCard: FC<IRecipeCardProps> = ({ recipe }) => {
             .toISOString()
             .substring(0, 10)}`}</p>
           <div className={styles.actionsContainer}>
-            <FiBookmark className={styles.bookmark} />
+            {!favs.includes(recipe.id!) ? (
+              <BsBookmark
+                className={styles.bookmark}
+                onClick={onFavouriteHandler}
+              />
+            ) : (
+              <BsBookmarkFill
+                className={styles.bookmark}
+                onClick={onFavouriteHandler}
+              />
+            )}
             {/* <div className={styles.ratingContainer}>
               <FiThumbsUp className={styles.thumbsUp} />
               <FiThumbsDown className={styles.thumbsDown} />

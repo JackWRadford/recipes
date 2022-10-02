@@ -7,9 +7,14 @@ import { doc, getDoc } from "firebase/firestore/lite";
 export interface IAuthContext {
   user: User | null;
   favs: string[];
+  setFavs: (newFavs: string[]) => void;
 }
 
-const AuthContext = createContext<IAuthContext>({ user: null, favs: [] });
+const AuthContext = createContext<IAuthContext>({
+  user: null,
+  favs: [],
+  setFavs: (newFavs: string[]) => {},
+});
 
 interface AuthContextProviderProps {
   children: React.ReactNode;
@@ -42,8 +47,15 @@ const AuthProvider: React.FC<AuthContextProviderProps> = ({ children }) => {
     return unsubscribe;
   }, []);
 
+  /// Set local favourites list to new one (set in database)
+  const setFavs = (newFavs: string[]) => {
+    setUserFavs(newFavs);
+  };
+
   return (
-    <AuthContext.Provider value={{ user: user, favs: userFavs }}>
+    <AuthContext.Provider
+      value={{ user: user, favs: userFavs, setFavs: setFavs }}
+    >
       {children}
     </AuthContext.Provider>
   );

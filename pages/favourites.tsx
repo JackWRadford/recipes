@@ -27,7 +27,10 @@ const FavouritesPage: NextPage = () => {
         recipeConverter
       );
       const favouriteRecipeIds: string[] = [...favs];
-      if (!favouriteRecipeIds.length) return;
+      if (!favouriteRecipeIds.length) {
+        setFavourites([]);
+        return;
+      }
       const q = query(
         recipesRef,
         where(documentId(), "in", favouriteRecipeIds)
