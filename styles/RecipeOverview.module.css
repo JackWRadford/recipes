@@ -27,3 +27,9 @@
   padding-top: 0.2rem;
   margin: 0;
 }
+
+.otherDetails {
+  margin: 0;
+  padding: 0;
+  font-size: smaller;
+}
