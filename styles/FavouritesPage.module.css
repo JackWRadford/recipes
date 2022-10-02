@@ -3,5 +3,8 @@
   flex-direction: column;
   margin: auto;
   max-width: 60rem;
-  padding: 0 1rem;
+}
+
+.contentWrapper h2 {
+  margin-left: 1rem;
 }
