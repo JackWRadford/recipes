@@ -1,0 +1,11 @@
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  max-width: 60rem;
+  padding-bottom: 100px;
+}
+
+.contentWrapper h2 {
+  margin-left: 1rem;
+}

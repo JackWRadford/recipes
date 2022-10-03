@@ -1,0 +1,20 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 40rem;
+  margin: auto;
+  gap: 1rem;
+  padding: 0 1rem 100px 1rem;
+}
+
+.titleRow {
+  margin: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.titleRow h2 {
+  margin: 0;
+  padding: 0;
+}

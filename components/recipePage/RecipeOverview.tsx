@@ -1,14 +1,24 @@
+import { FC } from "react";
+import { secondsToHoursMinutes } from "../../helper/ConvertionHelpers";
+import { Recipe } from "../../models/Recipe";
 import styles from "../../styles/RecipeOverview.module.css";
 
-const RecipeOverview = () => {
+interface IRecipeOverviewProps {
+  recipe: Recipe;
+}
+
+const RecipeOverview: FC<IRecipeOverviewProps> = ({ recipe }) => {
   return (
     <div className={styles.wrapper}>
       <div>
-        <h1 className={styles.title}>Cheesy tuna melts</h1>
-        <h4 className={styles.author}>By Jack Radford</h4>
-        <p>A tasty change from cheese on toast!</p>
+        <h1 className={styles.title}>{recipe.name}</h1>
+        <h4 className={styles.author}>{`By ${recipe.author}`}</h4>
+        <p>{recipe.description}</p>
+        <p className={styles.otherDetails}>{`Time: ${secondsToHoursMinutes(
+          recipe.cookingTime
+        )} • Difficulty: ${recipe.difficulty}`}</p>
       </div>
-      <div className={styles.imageContainer}></div>
+      {/* <div className={styles.imageContainer}></div> */}
     </div>
   );
 };

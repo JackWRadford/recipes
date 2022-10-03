@@ -2,4 +2,24 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  max-width: 40rem;
+}
+
+.listTitle {
+  margin: 1rem 2rem 0 2rem;
+}
+
+.noRecipes {
+  margin: 2rem auto;
+  color: gray;
+}
+
+.loadMore {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.loadMore p {
+  color: gray;
 }

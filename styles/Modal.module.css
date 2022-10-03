@@ -33,6 +33,10 @@
   align-items: center;
 }
 
+.closeBtn {
+  cursor: pointer;
+}
+
 @media (min-width: 768px) {
   .modal {
     width: 26rem;

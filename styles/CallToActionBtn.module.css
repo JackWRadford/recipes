@@ -1,0 +1,17 @@
+.button {
+  background-image: linear-gradient(
+    to right,
+    #4158d0 0%,
+    #c850c0 51%,
+    #ffcc70 100%
+  );
+  text-align: center;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  display: block;
+}
+
+.button:hover {
+  background-position: right center;
+}

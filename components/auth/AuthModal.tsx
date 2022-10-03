@@ -1,8 +1,18 @@
-import React, { ChangeEvent, FC } from "react";
+import React, { ChangeEvent, FC, useState } from "react";
 import Button from "../shared/Button";
 import Input from "../shared/Input";
 import Modal from "../shared/Modal";
-import styles from "../../styles/SignUpModal.module.css";
+import styles from "../../styles/AuthModal.module.css";
+import { auth, db } from "../../firebaseConfig";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import ErrorMsg from "../shared/ErrorMsg";
+import { FirebaseError } from "firebase/app";
+import { readableFromCode } from "../../helper/FirebaseErrors";
+import { collection, doc, setDoc } from "firebase/firestore/lite";
 
 interface AuthModalProps {
   isSignUp: boolean;
@@ -11,10 +21,66 @@ interface AuthModalProps {
 
 /// For sign up and sign in
 const AuthModal: FC<AuthModalProps> = ({ isSignUp, onClose }) => {
-  /// Either create new user or login
-  const submitHandler = (event: React.FormEvent) => {
+  /// Display name
+  const [displayName, setDisplayName] = useState("");
+  /// Email
+  const [email, setEmail] = useState("");
+  /// Password
+  const [password, setPassword] = useState("");
+  /// Confirm password
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  /// Error message
+  const [errorMessage, setErrorMessage] = useState("");
+
+  /// Loading
+  const [isLoading, setIsLoading] = useState(false);
+
+  /// Either create new user account or login
+  const submitHandler = async (event: React.FormEvent) => {
+    setIsLoading(true);
     event.preventDefault();
-    onClose();
+    try {
+      if (isSignUp) {
+        // Sign up
+        if (!displayName.trim()) {
+          setIsLoading(false);
+          setErrorMessage("Please enter a display name");
+          return;
+        }
+        if (password === confirmPassword) {
+          const credential = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+          // Add display name to user profile
+          await updateProfile(credential.user, { displayName: displayName });
+          // Create user doc in users collection
+          const docRef = doc(db, "users", credential.user.uid);
+          await setDoc(docRef, {
+            email: email,
+            favourites: [],
+          });
+          setIsLoading(false);
+          onClose();
+        } else {
+          setIsLoading(false);
+          setErrorMessage("Passwords must match");
+        }
+      } else {
+        // Sign in
+        await signInWithEmailAndPassword(auth, email, password);
+        setIsLoading(false);
+        onClose();
+      }
+    } catch (error) {
+      setIsLoading(false);
+      if (error instanceof FirebaseError) {
+        setErrorMessage(readableFromCode(error.code));
+      }
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -24,42 +90,53 @@ const AuthModal: FC<AuthModalProps> = ({ isSignUp, onClose }) => {
       content={
         <form onSubmit={submitHandler}>
           <div className={styles.contentWrapper}>
+            {isSignUp && (
+              <Input
+                type={"text"}
+                name={"displayname"}
+                value={displayName}
+                placeholder={"Display name"}
+                onChange={(event: ChangeEvent<HTMLInputElement>): void => {
+                  setDisplayName(event.currentTarget.value);
+                }}
+              />
+            )}
             <Input
               type={"email"}
               name={"email"}
-              value={""}
+              value={email}
               placeholder={"Email"}
-              onChange={function (event: ChangeEvent<HTMLInputElement>): void {
-                throw new Error("Function not implemented.");
+              onChange={(event: ChangeEvent<HTMLInputElement>): void => {
+                setEmail(event.currentTarget.value);
               }}
             />
             <Input
               type={"password"}
               name={"password"}
-              value={""}
+              value={password}
               placeholder={"Password"}
-              onChange={function (event: ChangeEvent<HTMLInputElement>): void {
-                throw new Error("Function not implemented.");
+              onChange={(event: ChangeEvent<HTMLInputElement>): void => {
+                setPassword(event.currentTarget.value);
               }}
             />
             {isSignUp && (
               <Input
                 type={"password"}
                 name={"confirmpassword"}
-                value={""}
+                value={confirmPassword}
                 placeholder={"Confirm password"}
-                onChange={function (
-                  event: ChangeEvent<HTMLInputElement>
-                ): void {
-                  throw new Error("Function not implemented.");
+                onChange={(event: ChangeEvent<HTMLInputElement>): void => {
+                  setConfirmPassword(event.currentTarget.value);
                 }}
               />
             )}
+            {errorMessage && <ErrorMsg message={errorMessage} />}
             <Button
               type={"submit"}
               name={"signup"}
               label={isSignUp ? "Sign up" : "Log in"}
-              onClick={undefined}
+              onClick={() => {}}
+              isLoading={isLoading}
             />
           </div>
         </form>

@@ -1,14 +1,45 @@
+import { FC } from "react";
+import { Recipe } from "../models/Recipe";
 import styles from "../styles/RecipesList.module.css";
 import RecipeCard from "./RecipeCard";
+import Button from "./shared/Button";
 
-const RecipesList = () => {
+interface IRecipesListProps {
+  recipes: Recipe[];
+  loadMore: () => {};
+  noMoreRecipes: boolean;
+  isLoading: boolean;
+}
+
+const RecipesList: FC<IRecipesListProps> = ({
+  recipes,
+  loadMore,
+  noMoreRecipes,
+  isLoading,
+}) => {
   return (
     <div className={styles.wrapper}>
-      <RecipeCard />
-      <RecipeCard />
-      <RecipeCard />
-      <RecipeCard />
-      <RecipeCard />
+      {!recipes.length && <p className={styles.noRecipes}>No recipes found</p>}
+      {recipes.map((r) => (
+        <RecipeCard key={r.id} recipe={r} />
+      ))}
+      <div className={styles.loadMore}>
+        {recipes.length ? (
+          !noMoreRecipes ? (
+            <Button
+              type={"button"}
+              name={"loadmore"}
+              label={"Load more"}
+              onClick={loadMore}
+              isLoading={isLoading}
+            />
+          ) : (
+            <p>No more recipes</p>
+          )
+        ) : (
+          <></>
+        )}
+      </div>
     </div>
   );
 };
