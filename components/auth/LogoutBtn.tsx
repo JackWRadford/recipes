@@ -1,6 +1,6 @@
 import { signOut } from "firebase/auth";
 import { FC } from "react";
-import { FiLogOut } from "react-icons/fi";
+import { FaSignOutAlt } from "react-icons/fa";
 import { auth } from "../../firebaseConfig";
 import Button from "../shared/Button";
 
@@ -19,7 +19,7 @@ const LogoutBtn: FC<ILogoutBtnProps> = ({ isMobile }) => {
   };
 
   return isMobile ? (
-    <FiLogOut onClick={clickHandler} />
+    <FaSignOutAlt onClick={clickHandler} />
   ) : (
     <Button
       type={"button"}
