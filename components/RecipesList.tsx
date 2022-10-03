@@ -24,16 +24,20 @@ const RecipesList: FC<IRecipesListProps> = ({
         <RecipeCard key={r.id} recipe={r} />
       ))}
       <div className={styles.loadMore}>
-        {!noMoreRecipes ? (
-          <Button
-            type={"button"}
-            name={"loadmore"}
-            label={"Load more"}
-            onClick={loadMore}
-            isLoading={isLoading}
-          />
+        {recipes.length ? (
+          !noMoreRecipes ? (
+            <Button
+              type={"button"}
+              name={"loadmore"}
+              label={"Load more"}
+              onClick={loadMore}
+              isLoading={isLoading}
+            />
+          ) : (
+            <p>No more recipes</p>
+          )
         ) : (
-          <p>No more recipes</p>
+          <></>
         )}
       </div>
     </div>
