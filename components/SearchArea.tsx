@@ -27,7 +27,7 @@ const SearchArea: FC<ISearchAreaProps> = ({ onSubmit, isLoading }) => {
         type={"search"}
         name={"searchrecipes"}
         value={searchValue}
-        placeholder={"Cookie"}
+        placeholder={"Chocolate Cake"}
         onChange={onChangeHandler}
       />
       <Button

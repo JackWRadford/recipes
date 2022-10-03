@@ -6,13 +6,21 @@
   margin: 2rem 1rem 0 1rem;
 }
 
-@media (max-width: 750px) {
-  .wrapper {
-    display: none;
-  }
-}
-
 .title {
   margin: 0;
   padding-left: 0.5rem;
+}
+
+@media (max-width: 750px) {
+  .title {
+    display: none;
+  }
+  .wrapper {
+    margin-top: 1rem;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .wrapper Input {
+    flex: 1;
+  }
 }
