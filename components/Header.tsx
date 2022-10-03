@@ -29,7 +29,7 @@ const Header = () => {
       <div className={styles.content}>
         <Link href={"/"}>
           <div className={styles.logoContainer}>
-            <h1>🍅{!isMobile && " Recipes"}</h1>
+            <h1>{!isMobile && " Recipes"}</h1>
           </div>
         </Link>
         <div className={styles.navContainer}>

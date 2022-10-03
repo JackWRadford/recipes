@@ -38,7 +38,7 @@ const FavouritesPage: NextPage = () => {
       const queryFirst = query(
         collection(db, "recipes").withConverter(recipeConverter),
         where(documentId(), "in", favs),
-        limit(2)
+        limit(6)
       );
       const recipesSnapshots = await getDocs(queryFirst);
       const lastVisible =
@@ -61,7 +61,7 @@ const FavouritesPage: NextPage = () => {
       collection(db, "recipes").withConverter(recipeConverter),
       where(documentId(), "in", favs),
       startAfter(lastRecipe),
-      limit(2)
+      limit(6)
     );
     const recipesSnapshots = await getDocs(recipesQueryNext);
     const lastVisible = recipesSnapshots.docs[recipesSnapshots.docs.length - 1];

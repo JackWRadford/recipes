@@ -35,6 +35,7 @@ const recipeConverter = {
       instructions: recipe.instructions,
       notes: recipe.notes,
       dateCreated: recipe.dateCreated,
+      nameKeyTerms: recipe.name.toString().toLowerCase().trim().split(" "), // For search
     };
   },
   fromFirestore(snapshot: QueryDocumentSnapshot): Recipe {
