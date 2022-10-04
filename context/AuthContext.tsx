@@ -25,6 +25,11 @@ const AuthProvider: React.FC<AuthContextProviderProps> = ({ children }) => {
   const [userFavs, setUserFavs] = useState<string[]>([]);
 
   useEffect(() => {
+    /**
+     * Fetch user's favourite recipe ids list
+     *
+     * @param uid - The unique user id from Firebase Auth
+     */
     const fetchUserFavs = async (uid: string) => {
       console.log("FIRESTORE: fetchUserFavourites");
       const docRef = doc(db, "users", uid);
@@ -47,7 +52,11 @@ const AuthProvider: React.FC<AuthContextProviderProps> = ({ children }) => {
     return unsubscribe;
   }, []);
 
-  /// Set local favourites list to new one (set in database)
+  /**
+   * Set local favourites list to a new one
+   *
+   * @param newFavs - The new list of favourite recipe ids
+   */
   const setFavs = (newFavs: string[]) => {
     setUserFavs(newFavs);
   };
