@@ -1,4 +1,3 @@
-import { doc, getDoc } from "firebase/firestore/lite";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
@@ -9,23 +8,33 @@ import IngredientsList from "../../components/recipePage/IngredientsList";
 import InstructionsList from "../../components/recipePage/InstructionsList";
 import RecipeOverview from "../../components/recipePage/RecipeOverview";
 import { AuthContext } from "../../context/AuthContext";
-import { db } from "../../firebaseConfig";
-import { Recipe, recipeConverter } from "../../models/recipe";
+import { Recipe } from "../../models/recipe";
+import { fetchRecipe } from "../../services/db_service";
 import styles from "../../styles/RecipePage.module.css";
 
+/**
+ * Page to show recipe details for the given recipe id in the path.
+ */
 const RecipePage: NextPage = () => {
-  const [recipe, setRecipe] = useState<Recipe>();
   const router = useRouter();
   const { user } = useContext(AuthContext);
+  const [recipe, setRecipe] = useState<Recipe>();
 
   useEffect(() => {
-    console.log("FIRESTORE: fetchRecipe");
-    const fetchRecipe = async (id: string) => {
-      const docRef = doc(db, "recipes", id).withConverter(recipeConverter);
-      const recipeSnapshot = await getDoc(docRef);
-      if (recipeSnapshot.exists()) setRecipe(recipeSnapshot.data());
+    /**
+     * Call db_service to get the recipe data for `id`.
+     *
+     * @param id - Unique recipe id
+     */
+    const getRecipe = async (id: string) => {
+      try {
+        const recipeSnapshot = await fetchRecipe(id);
+        if (recipeSnapshot.exists()) setRecipe(recipeSnapshot.data());
+      } catch (error) {
+        console.log("Error fetching recipe.");
+      }
     };
-    fetchRecipe(router.asPath.substring(8));
+    getRecipe(router.asPath.substring(8));
   }, [router.asPath]);
 
   return (

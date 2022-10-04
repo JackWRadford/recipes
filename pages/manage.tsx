@@ -23,19 +23,26 @@ import Difficulty from "../enums/difficulty";
 import { db } from "../firebaseConfig";
 import { readableFromCode } from "../helper/firebase_errors";
 import { Recipe, recipeConverter } from "../models/recipe";
+import { addRecipe, updateRecipe } from "../services/db_service";
 import styles from "../styles/ManagePage.module.css";
 
 interface IManagePageProps {
   router: { query: { recipe: string } };
 }
 
+/**
+ * Page for either adding a new recipe or editing a recipe depending if a recipe is passed to the page.
+ */
 const ManagePage: FC<IManagePageProps & WithRouterProps> = ({ router }) => {
+  /// Get the recipe data if passed to the page
   const recipe: Recipe | null = router.query.recipe
     ? JSON.parse(router.query.recipe)
     : null;
 
   const { user } = useContext(AuthContext);
   const [error, setError] = useState("");
+
+  /// Initialize state with the recipe data if a recipe was passed to the page
   const [name, setName] = useState(recipe ? recipe.name : "");
   const [description, setDescription] = useState(
     recipe ? recipe.description : ""
@@ -52,16 +59,32 @@ const ManagePage: FC<IManagePageProps & WithRouterProps> = ({ router }) => {
   const [duration, setDuration] = useState(recipe ? recipe.cookingTime : 600);
   const [isLoading, setIsLoading] = useState(false);
 
+  /**
+   *  Add a new ingredient to the ingredients list
+   *
+   * @param ingredientValue - New ingredient
+   */
   const onAddIngredientHandler = (ingredientValue: string) => {
     setIngredients((oldList) => {
       return [...oldList, ingredientValue];
     });
   };
 
+  /**
+   * Remove the ingredient with the `value` from the ingredients list
+   *
+   * @param value - Value of ingredient to remove
+   */
   const onRemoveIngredientHandler = (value: string) => {
     setIngredients((oldList) => oldList.filter((e) => e !== value));
   };
 
+  /**
+   * Update ingredient at `index` with the new `value`
+   *
+   * @param index - Index of the ingredient to change
+   * @param value - The new value of the ingredient
+   */
   const onChangeIngredientHandler = (index: number, value: string) => {
     setIngredients((oldList) => {
       let newList = [...oldList];
@@ -70,16 +93,32 @@ const ManagePage: FC<IManagePageProps & WithRouterProps> = ({ router }) => {
     });
   };
 
+  /**
+   *  Add a new step to the steps list
+   *
+   * @param stepValue - New step
+   */
   const onAddStepHandler = (stepValue: string) => {
     setSteps((oldList) => {
       return [...oldList, stepValue];
     });
   };
 
+  /**
+   * Remove the step with the `value` from the step list
+   *
+   * @param value - Value of step to remove
+   */
   const onRemoveStepHandler = (value: string) => {
     setSteps((oldList) => oldList.filter((e) => e !== value));
   };
 
+  /**
+   * Update step at `index` with the new `value`
+   *
+   * @param index - Index of the step to change
+   * @param value - The new value of the step
+   */
   const onChangeStepHandler = (index: number, value: string) => {
     setSteps((oldList) => {
       let newList = [...oldList];
@@ -88,15 +127,27 @@ const ManagePage: FC<IManagePageProps & WithRouterProps> = ({ router }) => {
     });
   };
 
+  /**
+   * Set the difficulty value to `value`
+   *
+   * @param value - The new difficulty value
+   */
   const onSetDifficultyHandler = (value: Difficulty) => {
     setDifficulty(value);
   };
 
+  /**
+   * Set the duration value to `value`
+   *
+   * @param value - The new duration value
+   */
   const onSetDurationHandler = (value: number) => {
     setDuration(value);
   };
 
-  /// Add recipe to recipes collection
+  /**
+   * Add recipe to recipes collection if all fields are valid.
+   */
   const onPublishHandler = async () => {
     setError("");
     if (!name) {
@@ -116,7 +167,6 @@ const ManagePage: FC<IManagePageProps & WithRouterProps> = ({ router }) => {
       return;
     }
     if (user) {
-      // Set id to current recipe id if editing (recipe is not null)
       const newRecipe: Recipe = new Recipe(
         name,
         user.displayName ?? "Anonymous",
@@ -128,27 +178,19 @@ const ManagePage: FC<IManagePageProps & WithRouterProps> = ({ router }) => {
         steps,
         "",
         serverTimestamp(),
-        recipe ? recipe.id : undefined
+        recipe ? recipe.id : undefined // Set id to current recipe id if editing (recipe is not null)
       );
       try {
         setIsLoading(true);
         if (!recipe) {
           // Add new recipe
-          await addDoc(
-            collection(db, "recipes").withConverter(recipeConverter),
-            newRecipe
-          );
+          await addRecipe(newRecipe);
         } else {
           // Update given recipe
-          const docRef = doc(db, "recipes", recipe.id!).withConverter(
-            recipeConverter
-          );
-          await setDoc(docRef, newRecipe, { merge: true });
+          await updateRecipe(newRecipe);
         }
-        setIsLoading(false);
       } catch (error) {
         console.log(error);
-        setIsLoading(false);
         if (error instanceof FirebaseError) {
           setError(readableFromCode(error.code));
         } else {

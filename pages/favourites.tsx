@@ -1,13 +1,4 @@
-import {
-  collection,
-  documentId,
-  getDocs,
-  limit,
-  query,
-  QueryDocumentSnapshot,
-  startAfter,
-  where,
-} from "firebase/firestore/lite";
+import { QueryDocumentSnapshot } from "firebase/firestore/lite";
 import { NextPage } from "next";
 import { useContext, useEffect, useState } from "react";
 import AuthBarrier from "../components/auth/AuthBarrier";
@@ -15,10 +6,13 @@ import Footer from "../components/footer/Footer";
 import Header from "../components/header/Header";
 import RecipesList from "../components/RecipesList";
 import { AuthContext } from "../context/AuthContext";
-import { db } from "../firebaseConfig";
-import { Recipe, recipeConverter } from "../models/recipe";
+import { Recipe } from "../models/recipe";
+import { fetchRecipes } from "../services/db_service";
 import styles from "../styles/FavouritesPage.module.css";
 
+/**
+ * Page that shows the current users favourited recipes.
+ */
 const FavouritesPage: NextPage = () => {
   const { user, favs } = useContext(AuthContext);
   const [favourites, setFavourites] = useState<Recipe[]>([]);
@@ -27,46 +21,41 @@ const FavouritesPage: NextPage = () => {
   const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   useEffect(() => {
-    const fetchFavourites = async () => {
+    /**
+     * Fetch favourite recipes if there are any.
+     */
+    const getFavourites = async () => {
       if (!user || !isFirstLoad) return;
-      console.log("FIRESTORE: fetchFavourites");
       if (!favs.length) {
         setFavourites([]);
         return;
       }
-      const queryFirst = query(
-        collection(db, "recipes").withConverter(recipeConverter),
-        where(documentId(), "in", favs),
-        limit(6)
-      );
-      const recipesSnapshots = await getDocs(queryFirst);
-      const lastVisible =
-        recipesSnapshots.docs[recipesSnapshots.docs.length - 1];
-      const recipesList = recipesSnapshots.docs.map((doc) => doc.data());
-      setIsFirstLoad(false);
-      setLastRecipe(lastVisible);
-      setFavourites(recipesList);
-      return recipesList;
+      try {
+        const { recipes, last } = await fetchRecipes(favs);
+        setIsFirstLoad(false);
+        setLastRecipe(last);
+        setFavourites(recipes);
+      } catch (error) {
+        console.log("Error when fetching favourite recipes.");
+      }
     };
 
-    fetchFavourites();
+    getFavourites();
   }, [user, favs, isFirstLoad]);
 
+  /**
+   * Load more favourite recipes. (recipes after lastRecipe)
+   */
   const loadMore = async () => {
     if (!lastRecipe) return;
     setIsLoading(true);
-    console.log("FIRESTORE: fetchPublished");
-    const recipesQueryNext = query(
-      collection(db, "recipes").withConverter(recipeConverter),
-      where(documentId(), "in", favs),
-      startAfter(lastRecipe),
-      limit(6)
-    );
-    const recipesSnapshots = await getDocs(recipesQueryNext);
-    const lastVisible = recipesSnapshots.docs[recipesSnapshots.docs.length - 1];
-    const recipesList = recipesSnapshots.docs.map((doc) => doc.data());
-    setLastRecipe(lastVisible);
-    setFavourites((oldRecipes) => [...oldRecipes, ...recipesList]);
+    try {
+      const { recipes, last } = await fetchRecipes(favs, undefined, lastRecipe);
+      setLastRecipe(last);
+      setFavourites((oldRecipes) => [...oldRecipes, ...recipes]);
+    } catch (error) {
+      console.log("Error loading more recipes.");
+    }
     setIsLoading(false);
   };
 

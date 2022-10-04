@@ -21,7 +21,9 @@ class Recipe {
   ) {}
 }
 
-/// Convert to and from Firestore and Recipe model
+/**
+ * Convert to and from Firestore and Recipe model
+ */
 const recipeConverter = {
   toFirestore(recipe: WithFieldValue<Recipe>): DocumentData {
     return {

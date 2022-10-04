@@ -1,24 +1,17 @@
-import {
-  collection,
-  getDocs,
-  limit,
-  orderBy,
-  Query,
-  query,
-  QueryDocumentSnapshot,
-  startAfter,
-  where,
-} from "firebase/firestore/lite";
+import { QueryDocumentSnapshot } from "firebase/firestore/lite";
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import Footer from "../components/footer/Footer";
 import Header from "../components/header/Header";
 import RecipesList from "../components/RecipesList";
 import SearchArea from "../components/SearchArea";
-import { db } from "../firebaseConfig";
-import { Recipe, recipeConverter } from "../models/recipe";
+import { Recipe } from "../models/recipe";
+import { fetchRecipes } from "../services/db_service";
 import styles from "../styles/HomePage.module.css";
 
+/**
+ * Page that shows recipes and search option.
+ */
 const HomePage: NextPage = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [lastRecipe, setLastRecipe] = useState<QueryDocumentSnapshot<Recipe>>();
@@ -26,78 +19,47 @@ const HomePage: NextPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    /// Get recipes from firestore
-    const fetchRecipes = async () => {
-      console.log("FIRESTORE: fetchRecipes");
-      const recipesQueryFirst = query(
-        collection(db, "recipes").withConverter(recipeConverter),
-        orderBy("dateCreated", "desc"),
-        limit(6)
-      );
-      const recipesSnapshots = await getDocs(recipesQueryFirst);
-      const lastVisible =
-        recipesSnapshots.docs[recipesSnapshots.docs.length - 1];
-      const recipesList = recipesSnapshots.docs.map((doc) => doc.data());
-      setLastRecipe(lastVisible);
-      setRecipes(recipesList);
-      return recipesList;
+    const getRecipes = async () => {
+      const { recipes, last } = await fetchRecipes();
+      setLastRecipe(last);
+      setRecipes(recipes);
     };
-
-    fetchRecipes();
+    getRecipes();
   }, []);
 
+  /**
+   * Load more recipes. (recipes after lastRecipe)
+   */
   const loadMore = async () => {
     if (!lastRecipe) return;
     setIsLoading(true);
-    console.log("FIRESTORE: fetchRecipes");
-    let recipesQueryNext: Query<Recipe>;
-    if (searchTerm) {
-      recipesQueryNext = query(
-        collection(db, "recipes").withConverter(recipeConverter),
-        where("nameKeyTerms", "array-contains-any", searchTerm.split(" ")),
-        startAfter(lastRecipe),
-        limit(6)
-      );
-    } else {
-      recipesQueryNext = query(
-        collection(db, "recipes").withConverter(recipeConverter),
-        orderBy("dateCreated", "desc"),
-        startAfter(lastRecipe),
-        limit(6)
-      );
-    }
-
-    const recipesSnapshots = await getDocs(recipesQueryNext);
-    const lastVisible = recipesSnapshots.docs[recipesSnapshots.docs.length - 1];
-    const recipesList = recipesSnapshots.docs.map((doc) => doc.data());
-    setLastRecipe(lastVisible);
-    setRecipes((oldRecipes) => [...oldRecipes, ...recipesList]);
+    const { recipes, last } = await fetchRecipes(
+      undefined,
+      undefined,
+      lastRecipe,
+      searchTerm ? searchTerm : undefined
+    );
+    setLastRecipe(last);
+    setRecipes((oldRecipes) => [...oldRecipes, ...recipes]);
     setIsLoading(false);
   };
 
-  const onSubmitHandler = async (userQuery: string) => {
-    console.log("FIRESTORE: queryRecipes");
+  /**
+   * Fetch recipes where the names include one or more of the words in the `userQuery`
+   *
+   * @param userQuery - The search query
+   */
+  const onSearchHandler = async (userQuery: string) => {
     setIsLoading(true);
     userQuery.trim().toLowerCase();
-    let recipesQueryFirst: Query<Recipe>;
-    if (userQuery) {
-      recipesQueryFirst = query(
-        collection(db, "recipes").withConverter(recipeConverter),
-        where("nameKeyTerms", "array-contains-any", userQuery.split(" ")),
-        limit(6)
-      );
-    } else {
-      recipesQueryFirst = query(
-        collection(db, "recipes").withConverter(recipeConverter),
-        orderBy("dateCreated", "desc"),
-        limit(6)
-      );
-    }
-    const recipesSnapshots = await getDocs(recipesQueryFirst);
-    const lastVisible = recipesSnapshots.docs[recipesSnapshots.docs.length - 1];
-    const recipesList = recipesSnapshots.docs.map((doc) => doc.data());
-    setLastRecipe(lastVisible);
-    setRecipes(recipesList);
+    const { recipes, last } = await fetchRecipes(
+      undefined,
+      undefined,
+      undefined,
+      userQuery ? userQuery : undefined
+    );
+    setLastRecipe(last);
+    setRecipes(recipes);
     setSearchTerm(userQuery);
     setIsLoading(false);
   };
@@ -112,7 +74,7 @@ const HomePage: NextPage = () => {
           noMoreRecipes={typeof lastRecipe === "undefined"}
           isLoading={isLoading}
         />
-        <SearchArea onSubmit={onSubmitHandler} isLoading={isLoading} />
+        <SearchArea onSubmit={onSearchHandler} isLoading={isLoading} />
       </div>
       <Footer />
     </>
