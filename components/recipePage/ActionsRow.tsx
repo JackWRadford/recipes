@@ -9,6 +9,9 @@ interface IActionsRow {
   recipe: Recipe;
 }
 
+/**
+ * Includes delete and edit options for the `recipe`
+ */
 const ActionsRow: FC<IActionsRow> = ({ recipe }) => {
   const router = useRouter();
   const [showConfirmModal, setShowConfirmModal] = useState(false);

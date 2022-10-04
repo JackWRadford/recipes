@@ -7,6 +7,9 @@ interface IRecipeOverviewProps {
   recipe: Recipe;
 }
 
+/**
+ * Overview details about the recipe, including: Name, description, cookingTime and difficulty.
+ */
 const RecipeOverview: FC<IRecipeOverviewProps> = ({ recipe }) => {
   return (
     <div className={styles.wrapper}>

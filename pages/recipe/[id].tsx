@@ -6,7 +6,7 @@ import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import ActionsRow from "../../components/recipePage/ActionsRow";
 import IngredientsList from "../../components/recipePage/IngredientsList";
-import RecipeInstructions from "../../components/recipePage/RecipeInstructions";
+import InstructionsList from "../../components/recipePage/InstructionsList";
 import RecipeOverview from "../../components/recipePage/RecipeOverview";
 import { AuthContext } from "../../context/AuthContext";
 import { db } from "../../firebaseConfig";
@@ -37,7 +37,7 @@ const RecipePage: NextPage = () => {
           <RecipeOverview recipe={recipe} />
           <div className={styles.contentWrapper}>
             <IngredientsList ingredients={recipe?.ingredients} />
-            <RecipeInstructions instructions={recipe?.instructions} />
+            <InstructionsList instructions={recipe?.instructions} />
           </div>
         </div>
       )}

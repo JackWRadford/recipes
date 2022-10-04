@@ -5,27 +5,32 @@ import { Recipe } from "../../models/recipe";
 import Button from "../ui/Button";
 import Modal from "../ui/Modal";
 import styles from "../../styles/ConfirmDeleteModal.module.css";
+import { deleteRecipe } from "../../services/db_service";
 
 interface IConfirmDeleteModalProps {
   onClose: () => void;
   recipe: Recipe;
 }
 
+/**
+ * Modal to get user confirmation before deleting the given `recipe`
+ */
 const ConfirmDeleteModal: FC<IConfirmDeleteModalProps> = ({
   onClose,
   recipe,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
+  /**
+   * Delete the `recipe`.
+   */
   const onDeleteHandler = async () => {
     setIsLoading(true);
-    const docRef = doc(db, "recipes", recipe.id!);
     try {
-      await deleteDoc(docRef);
-      setIsLoading(false);
+      await deleteRecipe(recipe.id!);
       onClose();
     } catch (error) {
-      setIsLoading(false);
+      console.log("Error while deleting recipe.");
     }
     setIsLoading(false);
   };
