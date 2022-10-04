@@ -3,7 +3,7 @@ import {
   QueryDocumentSnapshot,
   WithFieldValue,
 } from "firebase/firestore/lite";
-import Difficulty from "../enums/Difficulty";
+import Difficulty from "../enums/difficulty";
 
 class Recipe {
   constructor(

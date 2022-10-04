@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import Button from "../shared/Button";
+import Button from "../ui/Button";
 import styles from "../../styles/CallToActionBtn.module.css";
 
 const AddRecipeBtn = () => {

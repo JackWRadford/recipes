@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { FC } from "react";
 import { FaThList } from "react-icons/fa";
-import Button from "../shared/Button";
+import Button from "../ui/Button";
 
 interface IUserRecipesBtnProps {
   isMobile: boolean;

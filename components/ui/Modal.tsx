@@ -1,4 +1,4 @@
-import { MouseEventHandler, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import { IoMdClose } from "react-icons/io";
 import styles from "../../styles/Modal.module.css";

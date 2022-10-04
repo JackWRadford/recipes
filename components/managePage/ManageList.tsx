@@ -1,5 +1,5 @@
-import Button from "../shared/Button";
-import Input from "../shared/Input";
+import Button from "../ui/Button";
+import Input from "../ui/Input";
 import styles from "../../styles/ManageItems.module.css";
 import { ChangeEvent, FC, useState } from "react";
 import { IoMdClose } from "react-icons/io";

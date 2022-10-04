@@ -1,7 +1,7 @@
 import { FC } from "react";
-import Difficulty from "../../enums/Difficulty";
+import Difficulty from "../../enums/difficulty";
 import styles from "../../styles/DifficultySelector.module.css";
-import Button from "../shared/Button";
+import Button from "../ui/Button";
 
 interface IDifficultySelector {
   difficulty: Difficulty;

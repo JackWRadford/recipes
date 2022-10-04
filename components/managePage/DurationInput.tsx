@@ -1,6 +1,6 @@
 import { ChangeEvent, FC } from "react";
 import styles from "../../styles/DurationInput.module.css";
-import Input from "../shared/Input";
+import Input from "../ui/Input";
 
 interface IDurationInput {
   seconds: number;

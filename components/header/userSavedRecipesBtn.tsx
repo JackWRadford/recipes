@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { FC } from "react";
 import { FaBookmark } from "react-icons/fa";
-import Button from "../shared/Button";
+import Button from "../ui/Button";
 
 interface IUserSaveRecipesBtnProps {
   isMobile: boolean;

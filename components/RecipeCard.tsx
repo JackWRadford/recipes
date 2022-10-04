@@ -1,13 +1,13 @@
 import styles from "../styles/RecipeCard.module.css";
 import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import Link from "next/link";
-import { Recipe } from "../models/Recipe";
-import React, { FC, MouseEventHandler, useContext, useState } from "react";
-import { secondsToHoursMinutes } from "../helper/ConvertionHelpers";
+import { Recipe } from "../models/recipe";
+import React, { FC, useContext, useState } from "react";
+import { secondsToHoursMinutes } from "../helper/convertion_helpers";
 import { AuthContext } from "../context/AuthContext";
-import { doc, getDoc, setDoc } from "firebase/firestore/lite";
+import { doc, setDoc } from "firebase/firestore/lite";
 import { db } from "../firebaseConfig";
-import Modal from "./shared/Modal";
+import Modal from "./ui/Modal";
 
 interface IRecipeCardProps {
   recipe: Recipe;

@@ -1,81 +1,55 @@
 import React, { ChangeEvent, FC, useState } from "react";
-import Button from "../shared/Button";
-import Input from "../shared/Input";
-import Modal from "../shared/Modal";
+import Button from "../ui/Button";
+import Input from "../ui/Input";
+import Modal from "../ui/Modal";
 import styles from "../../styles/AuthModal.module.css";
-import { auth, db } from "../../firebaseConfig";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  updateProfile,
-} from "firebase/auth";
-import ErrorMsg from "../shared/ErrorMsg";
+import ErrorMsg from "../ui/ErrorMsg";
 import { FirebaseError } from "firebase/app";
-import { readableFromCode } from "../../helper/FirebaseErrors";
-import { collection, doc, setDoc } from "firebase/firestore/lite";
+import { readableFromCode } from "../../helper/firebase_errors";
+import { login, signUp } from "../../services/auth_service";
 
 interface AuthModalProps {
   isSignUp: boolean;
   onClose: () => void;
 }
 
-/// For sign up and sign in
+/**
+ * Shows form for signUp or login depending on `isSignUp` value.
+ */
 const AuthModal: FC<AuthModalProps> = ({ isSignUp, onClose }) => {
-  /// Display name
   const [displayName, setDisplayName] = useState("");
-  /// Email
   const [email, setEmail] = useState("");
-  /// Password
   const [password, setPassword] = useState("");
-  /// Confirm password
   const [confirmPassword, setConfirmPassword] = useState("");
-
-  /// Error message
   const [errorMessage, setErrorMessage] = useState("");
-
-  /// Loading
   const [isLoading, setIsLoading] = useState(false);
 
-  /// Either create new user account or login
+  /**
+   * Either signUp or login user with email and password, depending on the AuthModal's isSignUp parameter.
+   *
+   * @param event - React form event
+   */
   const submitHandler = async (event: React.FormEvent) => {
-    setIsLoading(true);
     event.preventDefault();
+    setIsLoading(true);
     try {
       if (isSignUp) {
-        // Sign up
         if (!displayName.trim()) {
           setIsLoading(false);
           setErrorMessage("Please enter a display name");
           return;
         }
         if (password === confirmPassword) {
-          const credential = await createUserWithEmailAndPassword(
-            auth,
-            email,
-            password
-          );
-          // Add display name to user profile
-          await updateProfile(credential.user, { displayName: displayName });
-          // Create user doc in users collection
-          const docRef = doc(db, "users", credential.user.uid);
-          await setDoc(docRef, {
-            email: email,
-            favourites: [],
-          });
-          setIsLoading(false);
+          await signUp(email, password, displayName);
           onClose();
         } else {
-          setIsLoading(false);
           setErrorMessage("Passwords must match");
         }
       } else {
-        // Sign in
-        await signInWithEmailAndPassword(auth, email, password);
-        setIsLoading(false);
+        await login(email, password);
         onClose();
       }
     } catch (error) {
-      setIsLoading(false);
       if (error instanceof FirebaseError) {
         setErrorMessage(readableFromCode(error.code));
       }

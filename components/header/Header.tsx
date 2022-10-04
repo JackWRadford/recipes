@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
-import styles from "../styles/Header.module.css";
-import LoginBtn from "./auth/LoginBtn";
-import LogoutBtn from "./auth/LogoutBtn";
-import SignUpBtn from "./auth/SignUpBtn";
-import AddRecipeBtn from "./user/addRecipeBtn";
-import UserRecipesBtn from "./user/userRecipesBtn";
-import UserSavedRecipesBtn from "./user/userSavedRecipesBtn";
+import { AuthContext } from "../../context/AuthContext";
+import styles from "../../styles/Header.module.css";
+import LoginBtn from "../auth/LoginBtn";
+import LogoutBtn from "../auth/LogoutBtn";
+import SignUpBtn from "../auth/SignUpBtn";
+import AddRecipeBtn from "./addRecipeBtn";
+import UserRecipesBtn from "./userRecipesBtn";
+import UserSavedRecipesBtn from "./userSavedRecipesBtn";
 
 const Header = () => {
   const { user } = useContext(AuthContext);

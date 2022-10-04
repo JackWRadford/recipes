@@ -1,7 +1,6 @@
 import {
   collection,
   documentId,
-  endBefore,
   getDocs,
   limit,
   query,
@@ -12,12 +11,12 @@ import {
 import { NextPage } from "next";
 import { useContext, useEffect, useState } from "react";
 import AuthBarrier from "../components/auth/AuthBarrier";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
+import Footer from "../components/footer/Footer";
+import Header from "../components/header/Header";
 import RecipesList from "../components/RecipesList";
 import { AuthContext } from "../context/AuthContext";
 import { db } from "../firebaseConfig";
-import { Recipe, recipeConverter } from "../models/Recipe";
+import { Recipe, recipeConverter } from "../models/recipe";
 import styles from "../styles/FavouritesPage.module.css";
 
 const FavouritesPage: NextPage = () => {

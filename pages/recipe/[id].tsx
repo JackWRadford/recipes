@@ -2,15 +2,15 @@ import { doc, getDoc } from "firebase/firestore/lite";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
-import Footer from "../../components/Footer";
-import Header from "../../components/Header";
+import Footer from "../../components/footer/Footer";
+import Header from "../../components/header/Header";
 import ActionsRow from "../../components/recipePage/ActionsRow";
 import IngredientsList from "../../components/recipePage/IngredientsList";
 import RecipeInstructions from "../../components/recipePage/RecipeInstructions";
 import RecipeOverview from "../../components/recipePage/RecipeOverview";
 import { AuthContext } from "../../context/AuthContext";
 import { db } from "../../firebaseConfig";
-import { Recipe, recipeConverter } from "../../models/Recipe";
+import { Recipe, recipeConverter } from "../../models/recipe";
 import styles from "../../styles/RecipePage.module.css";
 
 const RecipePage: NextPage = () => {

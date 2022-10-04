@@ -11,12 +11,12 @@ import {
 } from "firebase/firestore/lite";
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
+import Footer from "../components/footer/Footer";
+import Header from "../components/header/Header";
 import RecipesList from "../components/RecipesList";
 import SearchArea from "../components/SearchArea";
 import { db } from "../firebaseConfig";
-import { Recipe, recipeConverter } from "../models/Recipe";
+import { Recipe, recipeConverter } from "../models/recipe";
 import styles from "../styles/HomePage.module.css";
 
 const HomePage: NextPage = () => {

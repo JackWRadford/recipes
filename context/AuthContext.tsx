@@ -1,7 +1,6 @@
 import React, { createContext, FC, useEffect, useState } from "react";
 import { User } from "firebase/auth";
 import { auth, db } from "../firebaseConfig";
-import { Recipe } from "../models/Recipe";
 import { doc, getDoc } from "firebase/firestore/lite";
 
 export interface IAuthContext {

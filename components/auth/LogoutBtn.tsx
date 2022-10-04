@@ -1,18 +1,22 @@
-import { signOut } from "firebase/auth";
 import { FC } from "react";
 import { FaSignOutAlt } from "react-icons/fa";
-import { auth } from "../../firebaseConfig";
-import Button from "../shared/Button";
+import { logout } from "../../services/auth_service";
+import Button from "../ui/Button";
 
 interface ILogoutBtnProps {
   isMobile: boolean;
 }
 
+/**
+ * Logout the current user. Displays an icon instead of a label if `isMobile` is true
+ */
 const LogoutBtn: FC<ILogoutBtnProps> = ({ isMobile }) => {
-  /// Sign out current user
+  /**
+   * Sign out current user
+   */
   const clickHandler = async () => {
     try {
-      await signOut(auth);
+      await logout();
     } catch (error) {
       console.log(error);
     }

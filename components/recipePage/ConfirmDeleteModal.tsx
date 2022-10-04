@@ -1,9 +1,9 @@
 import { deleteDoc, doc } from "firebase/firestore/lite";
 import { FC, useState } from "react";
 import { db } from "../../firebaseConfig";
-import { Recipe } from "../../models/Recipe";
-import Button from "../shared/Button";
-import Modal from "../shared/Modal";
+import { Recipe } from "../../models/recipe";
+import Button from "../ui/Button";
+import Modal from "../ui/Modal";
 import styles from "../../styles/ConfirmDeleteModal.module.css";
 
 interface IConfirmDeleteModalProps {
