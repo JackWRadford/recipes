@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta charSet="utf-8" />
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="white" />
+        <meta name="theme-color" content="black" />
         <meta name="description" content="Share and discover great recipes!" />
         <title>Recipes</title>
       </Head>
