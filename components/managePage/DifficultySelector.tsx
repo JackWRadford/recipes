@@ -8,6 +8,9 @@ interface IDifficultySelector {
   setDifficulty: (value: Difficulty) => void;
 }
 
+/**
+ * Builds difficulty options from Difficulty enum, including which is selected based on the `difficulty` given
+ */
 const DifficultySelector: FC<IDifficultySelector> = ({
   difficulty,
   setDifficulty,
@@ -16,33 +19,20 @@ const DifficultySelector: FC<IDifficultySelector> = ({
     <>
       <h4 className={styles.title}>Difficulty</h4>
       <div className={styles.wrapper}>
-        <Button
-          className={`${styles.level} ${
-            difficulty === Difficulty.easy && styles.selected
-          }`}
-          type={"button"}
-          name={"easy"}
-          label={"Easy"}
-          onClick={() => setDifficulty(Difficulty.easy)}
-        />
-        <Button
-          className={`${styles.level} ${
-            difficulty === Difficulty.medium && styles.selected
-          }`}
-          type={"button"}
-          name={"medium"}
-          label={"Medium"}
-          onClick={() => setDifficulty(Difficulty.medium)}
-        />
-        <Button
-          className={`${styles.level} ${
-            difficulty === Difficulty.hard && styles.selected
-          }`}
-          type={"button"}
-          name={"hard"}
-          label={"Hard"}
-          onClick={() => setDifficulty(Difficulty.hard)}
-        />
+        {(Object.keys(Difficulty) as Array<keyof typeof Difficulty>).map(
+          (key) => (
+            <Button
+              key={key}
+              className={`${styles.level} ${
+                difficulty === key && styles.selected
+              }`}
+              type={"button"}
+              name={key}
+              label={key.toUpperCase()}
+              onClick={() => setDifficulty(Difficulty[key])}
+            />
+          )
+        )}
       </div>
     </>
   );

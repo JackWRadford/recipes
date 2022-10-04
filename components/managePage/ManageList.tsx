@@ -14,6 +14,9 @@ interface IManageListProps {
   onRemove: (value: string) => void;
 }
 
+/**
+ * For input of a list of strings.
+ */
 const ManageList: FC<IManageListProps> = ({
   listTitle,
   placeholder,
@@ -25,6 +28,9 @@ const ManageList: FC<IManageListProps> = ({
 }) => {
   const [itemValue, setItemValue] = useState("");
 
+  /**
+   * Add new string to the list and clear the main input.
+   */
   const onAddHandler = () => {
     if (itemValue.trim()) {
       onAdd(itemValue);
@@ -54,55 +60,24 @@ const ManageList: FC<IManageListProps> = ({
       </div>
       <div className={styles.itemList}>
         {items.map((item, index) => (
-          <ListItem
-            key={index}
-            name={item}
-            placeholder={subPlaceholder}
-            index={index}
-            onRemove={onRemove}
-            onChange={onChange}
-          />
+          <div key={index} className={styles.listItem}>
+            <IoMdClose
+              className={styles.closeBtn}
+              color="gray"
+              size={24}
+              onClick={() => onRemove(item)}
+            />
+            <Input
+              type={"text"}
+              name={`item${index}`}
+              value={item}
+              placeholder={subPlaceholder}
+              onChange={(e) => onChange(index, e.currentTarget.value)}
+            />
+          </div>
         ))}
       </div>
     </>
-  );
-};
-
-interface IListItem {
-  name: string;
-  placeholder: string;
-  index: number;
-  onRemove: (value: string) => void;
-  onChange: (index: number, value: string) => void;
-}
-
-const ListItem: FC<IListItem> = ({
-  name,
-  placeholder,
-  index,
-  onRemove,
-  onChange,
-}) => {
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    onChange(index, e.currentTarget.value);
-  };
-
-  return (
-    <div className={styles.listItem}>
-      <IoMdClose
-        className={styles.closeBtn}
-        color="gray"
-        size={24}
-        onClick={() => onRemove(name)}
-      />
-      <Input
-        type={"text"}
-        name={`item${index}`}
-        value={name}
-        placeholder={placeholder}
-        onChange={onChangeHandler}
-      />
-    </div>
   );
 };
 

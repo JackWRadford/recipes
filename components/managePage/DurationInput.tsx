@@ -7,6 +7,9 @@ interface IDurationInput {
   setSeconds: (value: number) => void;
 }
 
+/**
+ * Takes and displays duration input in minutes, but, handles the duration in seconds.
+ */
 const DurationInput: FC<IDurationInput> = ({ seconds, setSeconds }) => {
   return (
     <>
