@@ -8,6 +8,9 @@ interface ISearchAreaProps {
   isLoading: boolean;
 }
 
+/**
+ * Includes a search bar and button that calls `onSubmit`.
+ */
 const SearchArea: FC<ISearchAreaProps> = ({ onSubmit, isLoading }) => {
   const [searchValue, setSearchValue] = useState("");
 

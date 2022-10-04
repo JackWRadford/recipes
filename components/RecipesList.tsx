@@ -11,6 +11,9 @@ interface IRecipesListProps {
   isLoading: boolean;
 }
 
+/**
+ * Builds a list of the given `recipes`. Includes a button that calls `loadMore` to get more recipes, unless there are `noMoreRecipes`.
+ */
 const RecipesList: FC<IRecipesListProps> = ({
   recipes,
   loadMore,

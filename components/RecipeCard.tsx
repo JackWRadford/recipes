@@ -5,14 +5,16 @@ import { Recipe } from "../models/recipe";
 import React, { FC, useContext, useState } from "react";
 import { secondsToHoursMinutes } from "../helper/convertion_helpers";
 import { AuthContext } from "../context/AuthContext";
-import { doc, setDoc } from "firebase/firestore/lite";
-import { db } from "../firebaseConfig";
 import Modal from "./ui/Modal";
+import { updateUserFavourites } from "../services/db_service";
 
 interface IRecipeCardProps {
   recipe: Recipe;
 }
 
+/**
+ * Shows the main `recipe` details. Can be clicked to navigate to the recipe page. Contains a bookmark button to favourite the recipe.
+ */
 const RecipeCard: FC<IRecipeCardProps> = ({ recipe }) => {
   const { user, favs, setFavs } = useContext(AuthContext);
   const [showModal, setShowModal] = useState(false);
@@ -21,14 +23,20 @@ const RecipeCard: FC<IRecipeCardProps> = ({ recipe }) => {
     setShowModal(false);
   };
 
-  /// toggle recipe favourite
+  /**
+   * Toggles the recipe as a favourite if the user is authenticated, and asks the user to authenticate if they are not.
+   *
+   * @param e - Mouse event
+   */
   const onFavouriteHandler = async (e: React.MouseEvent) => {
+    // Stop the card from being clicked as well
     e.stopPropagation();
     if (!user) {
       // Alert user to authenticate to favourite recipes
       setShowModal(true);
       return;
     }
+    // Add the recipe if not already a favourite, else remove it from favourites
     const index = favs.indexOf(recipe.id!, 0);
     const newFavs = [...favs];
     if (index > -1) {
@@ -36,11 +44,14 @@ const RecipeCard: FC<IRecipeCardProps> = ({ recipe }) => {
     } else {
       newFavs.push(recipe.id!);
     }
-    // Update database
-    const docRef = doc(db, "users", user!.uid);
-    await setDoc(docRef, { favourites: newFavs }, { merge: true });
-    // Update locally
-    setFavs(newFavs);
+    try {
+      // Update database
+      await updateUserFavourites(user!.uid, newFavs);
+      // Update locally
+      setFavs(newFavs);
+    } catch (error) {
+      console.log("Error while updating favourites list.");
+    }
   };
 
   return (
