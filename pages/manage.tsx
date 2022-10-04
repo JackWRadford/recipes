@@ -1,11 +1,5 @@
 import { FirebaseError } from "firebase/app";
-import {
-  addDoc,
-  collection,
-  doc,
-  serverTimestamp,
-  setDoc,
-} from "firebase/firestore/lite";
+import { serverTimestamp } from "firebase/firestore/lite";
 import { WithRouterProps } from "next/dist/client/with-router";
 import { withRouter } from "next/router";
 import { ChangeEvent, FC, useContext, useState } from "react";
@@ -20,9 +14,8 @@ import ErrorMsg from "../components/ui/ErrorMsg";
 import Input from "../components/ui/Input";
 import { AuthContext } from "../context/AuthContext";
 import Difficulty from "../enums/difficulty";
-import { db } from "../firebaseConfig";
 import { readableFromCode } from "../helper/firebase_errors";
-import { Recipe, recipeConverter } from "../models/recipe";
+import { Recipe } from "../models/recipe";
 import { addRecipe, updateRecipe } from "../services/db_service";
 import styles from "../styles/ManagePage.module.css";
 
