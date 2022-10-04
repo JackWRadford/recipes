@@ -3,7 +3,9 @@ import ReactDOM from "react-dom";
 import { IoMdClose } from "react-icons/io";
 import styles from "../../styles/Modal.module.css";
 
-/// Backdrop behind modal
+/**
+ * Covers the whole window. Calls `onClick` when clicked.
+ */
 const Backdrop: React.FC<{ onClick: () => void }> = (props) => {
   return <div className={styles.backdrop} onClick={props.onClick} />;
 };
@@ -14,7 +16,9 @@ interface ModalOverlayProps {
   onClose: () => void;
 }
 
-/// Modal on top of backdrop
+/**
+ * Generic modal that shows the given `title` and `content` and calls `onClose` when the close button is clicked.
+ */
 const ModalOverlay: React.FC<ModalOverlayProps> = ({
   title,
   content,
@@ -42,7 +46,9 @@ interface ModelProps {
   onClose: () => void;
 }
 
-/// Render modal overlay and backdrop
+/**
+ * Renders the Backdrop and ModalOverlay with the given props, with portals.
+ */
 const Modal: React.FC<ModelProps> = ({ title, content, onClose }) => {
   const ref = useRef<HTMLElement | null>();
   const [mounted, setIsMounted] = useState(false);
