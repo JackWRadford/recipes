@@ -2,6 +2,7 @@ import React, { createContext, FC, useEffect, useState } from "react";
 import { User } from "firebase/auth";
 import { auth, db } from "../firebaseConfig";
 import { doc, getDoc } from "firebase/firestore/lite";
+import { fetchUserFavourites } from "../services/db_service";
 
 export interface IAuthContext {
   user: User | null;
@@ -9,6 +10,9 @@ export interface IAuthContext {
   setFavs: (newFavs: string[]) => void;
 }
 
+/**
+ * Includes the FirebaseAuth `user`, their favourite recipe ids `favs` and `setFavs` to update the list.
+ */
 const AuthContext = createContext<IAuthContext>({
   user: null,
   favs: [],
@@ -19,6 +23,9 @@ interface AuthContextProviderProps {
   children: React.ReactNode;
 }
 
+/**
+ * Auth provider to wrap the given `children`.
+ */
 const AuthProvider: React.FC<AuthContextProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [userFavs, setUserFavs] = useState<string[]>([]);
@@ -30,13 +37,13 @@ const AuthProvider: React.FC<AuthContextProviderProps> = ({ children }) => {
      * @param uid - The unique user id from Firebase Auth
      */
     const fetchUserFavs = async (uid: string) => {
-      console.log("FIRESTORE: fetchUserFavourites");
-      const docRef = doc(db, "users", uid);
-      const userSnapshot = await getDoc(docRef);
-      const userData = userSnapshot.data();
-      setUserFavs(userData ? userData.favourites : []);
+      const favouriteIds = await fetchUserFavourites(uid);
+      setUserFavs(favouriteIds);
     };
 
+    /**
+     * Subscribe to the FirebaseAuth state changes. (SignIn, SignOut)
+     */
     const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
       if (firebaseUser) {
         // Get user's favourites

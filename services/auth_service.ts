@@ -19,6 +19,7 @@ export const signUp = async (
   password: string,
   displayName: string
 ) => {
+  console.log("FIREBASE_AUTH: signUp");
   const credential = await createUserWithEmailAndPassword(
     auth,
     email,
@@ -37,6 +38,7 @@ export const signUp = async (
  * @param password
  */
 export const login = async (email: string, password: string) => {
+  console.log("FIREBASE_AUTH: login");
   await signInWithEmailAndPassword(auth, email, password);
 };
 
@@ -44,5 +46,6 @@ export const login = async (email: string, password: string) => {
  * Sign out current authenticated user
  */
 export const logout = async () => {
+  console.log("FIREBASE_AUTH: logout");
   await signOut(auth);
 };

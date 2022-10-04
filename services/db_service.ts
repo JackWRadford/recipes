@@ -1,4 +1,4 @@
-import { deleteDoc, doc, setDoc } from "firebase/firestore/lite";
+import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore/lite";
 import { db } from "../firebaseConfig";
 
 /** Users firestore collection identifier */
@@ -14,6 +14,7 @@ export const RECIPES_COL = "recipes";
  * @param uid - Unique user id given from FirebaseAuth credentials
  */
 export const createUserDoc = async (email: string, uid: string) => {
+  console.log("FIRESTORE: createUserDoc");
   const docRef = doc(db, USERS_COL, uid);
   await setDoc(docRef, {
     email: email,
@@ -27,6 +28,7 @@ export const createUserDoc = async (email: string, uid: string) => {
  * @param id - The id of the recipe to be deleted.
  */
 export const deleteRecipe = async (id: string) => {
+  console.log("FIRESTORE: deleteRecipe");
   const docRef = doc(db, RECIPES_COL, id);
   await deleteDoc(docRef);
 };
@@ -41,6 +43,21 @@ export const updateUserFavourites = async (
   uid: string,
   newFavourites: string[]
 ) => {
-  const docRef = doc(db, "users", uid);
+  console.log("FIRESTORE: updateUserFavourites");
+  const docRef = doc(db, USERS_COL, uid);
   await setDoc(docRef, { favourites: newFavourites }, { merge: true });
+};
+
+/**
+ * Fetch the given user's list of favourite recipe ids.
+ *
+ * @param uid - Unique user id given from FirebaseAuth credentials
+ * @returns A Promise of the array of favourite recipe ids
+ */
+export const fetchUserFavourites = async (uid: string): Promise<string[]> => {
+  console.log("FIRESTORE: fetchUserFavourites");
+  const docRef = doc(db, USERS_COL, uid);
+  const userSnapshot = await getDoc(docRef);
+  const userData = userSnapshot.data();
+  return userData ? userData.favourites : [];
 };
