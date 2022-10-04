@@ -5,21 +5,26 @@ import styles from "../../styles/Header.module.css";
 import LoginBtn from "../auth/LoginBtn";
 import LogoutBtn from "../auth/LogoutBtn";
 import SignUpBtn from "../auth/SignUpBtn";
-import AddRecipeBtn from "./addRecipeBtn";
-import UserRecipesBtn from "./userRecipesBtn";
-import UserSavedRecipesBtn from "./userSavedRecipesBtn";
+import AddRecipeBtn from "./AddRecipeBtn";
+import UserRecipesBtn from "./PublishedBtn";
+import UserSavedRecipesBtn from "./FavouritesBtn";
 
+/**
+ * Application header
+ */
 const Header = () => {
   const { user } = useContext(AuthContext);
+  // Depends on window width. Dictates if label of icons should be used for header actions
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     setIsMobile(window.innerWidth < 700);
-
+    /**
+     * Sets if mobile, depending on window width. Used on "resize" event
+     */
     const updateMedia = () => {
       setIsMobile(window.innerWidth < 700);
     };
-
     window.addEventListener("resize", updateMedia);
     return () => window.removeEventListener("resize", updateMedia);
   }, []);

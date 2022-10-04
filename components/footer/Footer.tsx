@@ -1,5 +1,8 @@
 import styles from "../../styles/Footer.module.css";
 
+/**
+ * Application footer
+ */
 const Footer = () => {
   return (
     <footer className={styles.footer}>
