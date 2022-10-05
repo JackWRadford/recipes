@@ -4,8 +4,6 @@ import { WithRouterProps } from "next/dist/client/with-router";
 import { withRouter } from "next/router";
 import { ChangeEvent, FC, useContext, useState } from "react";
 import AuthBarrier from "../components/auth/AuthBarrier";
-import Footer from "../components/footer/Footer";
-import Header from "../components/header/Header";
 import DifficultySelector from "../components/managePage/DifficultySelector";
 import DurationInput from "../components/managePage/DurationInput";
 import ManageList from "../components/managePage/ManageList";
@@ -194,72 +192,64 @@ const ManagePage: FC<IManagePageProps & WithRouterProps> = ({ router }) => {
     }
   };
 
-  return (
-    <>
-      <Header />
-      {user ? (
-        <div className={styles.wrapper}>
-          <div className={styles.titleRow}>
-            <h2>{recipe ? "Edit recipe" : "Create a recipe"}</h2>
-            <Button
-              type={"button"}
-              name={"publish"}
-              label={"Publish"}
-              onClick={onPublishHandler}
-              isLoading={isLoading}
-            />
-          </div>
-          {error && <ErrorMsg message={error} />}
-          <Input
-            type={"text"}
-            name={"recipename"}
-            value={name}
-            placeholder={"Name"}
-            onChange={(event: ChangeEvent<HTMLInputElement>): void => {
-              setName(event.currentTarget.value);
-            }}
-          />
-          <Input
-            type={"text"}
-            name={"recipedescription"}
-            value={description}
-            placeholder={"Short description"}
-            onChange={(event: ChangeEvent<HTMLInputElement>): void => {
-              setDescription(event.currentTarget.value);
-            }}
-          />
+  return user ? (
+    <div className={styles.wrapper}>
+      <div className={styles.titleRow}>
+        <h2>{recipe ? "Edit recipe" : "Create a recipe"}</h2>
+        <Button
+          type={"button"}
+          name={"publish"}
+          label={"Publish"}
+          onClick={onPublishHandler}
+          isLoading={isLoading}
+        />
+      </div>
+      {error && <ErrorMsg message={error} />}
+      <Input
+        type={"text"}
+        name={"recipename"}
+        value={name}
+        placeholder={"Name"}
+        onChange={(event: ChangeEvent<HTMLInputElement>): void => {
+          setName(event.currentTarget.value);
+        }}
+      />
+      <Input
+        type={"text"}
+        name={"recipedescription"}
+        value={description}
+        placeholder={"Short description"}
+        onChange={(event: ChangeEvent<HTMLInputElement>): void => {
+          setDescription(event.currentTarget.value);
+        }}
+      />
 
-          <ManageList
-            listTitle={"Ingredients"}
-            placeholder={"Add an ingredient (e.g. 100g chocolate)"}
-            subPlaceholder={"Ingredient"}
-            items={ingredients}
-            onAdd={onAddIngredientHandler}
-            onChange={onChangeIngredientHandler}
-            onRemove={onRemoveIngredientHandler}
-          />
-          <ManageList
-            listTitle={"Instructions"}
-            placeholder={
-              "Add a step (e.g. Pre-heat oven to 100 degrees celcius)"
-            }
-            subPlaceholder={"Step"}
-            items={steps}
-            onAdd={onAddStepHandler}
-            onChange={onChangeStepHandler}
-            onRemove={onRemoveStepHandler}
-          />
-          <DifficultySelector
-            difficulty={difficulty}
-            setDifficulty={onSetDifficultyHandler}
-          />
-          <DurationInput seconds={duration} setSeconds={onSetDurationHandler} />
-        </div>
-      ) : (
-        <AuthBarrier label={"create a recipe"} />
-      )}
-      <Footer />
-    </>
+      <ManageList
+        listTitle={"Ingredients"}
+        placeholder={"Add an ingredient (e.g. 100g chocolate)"}
+        subPlaceholder={"Ingredient"}
+        items={ingredients}
+        onAdd={onAddIngredientHandler}
+        onChange={onChangeIngredientHandler}
+        onRemove={onRemoveIngredientHandler}
+      />
+      <ManageList
+        listTitle={"Instructions"}
+        placeholder={"Add a step (e.g. Pre-heat oven to 100 degrees celcius)"}
+        subPlaceholder={"Step"}
+        items={steps}
+        onAdd={onAddStepHandler}
+        onChange={onChangeStepHandler}
+        onRemove={onRemoveStepHandler}
+      />
+      <DifficultySelector
+        difficulty={difficulty}
+        setDifficulty={onSetDifficultyHandler}
+      />
+      <DurationInput seconds={duration} setSeconds={onSetDurationHandler} />
+    </div>
+  ) : (
+    <AuthBarrier label={"create a recipe"} />
   );
 };
 

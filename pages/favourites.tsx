@@ -2,8 +2,6 @@ import { QueryDocumentSnapshot } from "firebase/firestore/lite";
 import { NextPage } from "next";
 import { useContext, useEffect, useState } from "react";
 import AuthBarrier from "../components/auth/AuthBarrier";
-import Footer from "../components/footer/Footer";
-import Header from "../components/header/Header";
 import RecipesList from "../components/RecipesList";
 import { AuthContext } from "../context/AuthContext";
 import { Recipe } from "../models/recipe";
@@ -59,24 +57,18 @@ const FavouritesPage: NextPage = () => {
     setIsLoading(false);
   };
 
-  return (
-    <>
-      <Header />
-      {user ? (
-        <div className={styles.contentWrapper}>
-          <h2>Favourites</h2>
-          <RecipesList
-            recipes={favourites}
-            loadMore={loadMore}
-            noMoreRecipes={typeof lastRecipe === "undefined"}
-            isLoading={isLoading}
-          />
-        </div>
-      ) : (
-        <AuthBarrier label={"see your favourite recipes"} />
-      )}
-      <Footer />
-    </>
+  return user ? (
+    <div className={styles.contentWrapper}>
+      <h2>Favourites</h2>
+      <RecipesList
+        recipes={favourites}
+        loadMore={loadMore}
+        noMoreRecipes={typeof lastRecipe === "undefined"}
+        isLoading={isLoading}
+      />
+    </div>
+  ) : (
+    <AuthBarrier label={"see your favourite recipes"} />
   );
 };
 

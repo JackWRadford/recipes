@@ -1,8 +1,6 @@
 import { QueryDocumentSnapshot } from "firebase/firestore/lite";
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
-import Footer from "../components/footer/Footer";
-import Header from "../components/header/Header";
 import RecipesList from "../components/RecipesList";
 import SearchArea from "../components/SearchArea";
 import { Recipe } from "../models/recipe";
@@ -65,19 +63,15 @@ const HomePage: NextPage = () => {
   };
 
   return (
-    <>
-      <Header />
-      <div className={styles.contentWrapper}>
-        <RecipesList
-          recipes={recipes}
-          loadMore={loadMore}
-          noMoreRecipes={typeof lastRecipe === "undefined"}
-          isLoading={isLoading}
-        />
-        <SearchArea onSubmit={onSearchHandler} isLoading={isLoading} />
-      </div>
-      <Footer />
-    </>
+    <div className={styles.contentWrapper}>
+      <RecipesList
+        recipes={recipes}
+        loadMore={loadMore}
+        noMoreRecipes={typeof lastRecipe === "undefined"}
+        isLoading={isLoading}
+      />
+      <SearchArea onSubmit={onSearchHandler} isLoading={isLoading} />
+    </div>
   );
 };
 

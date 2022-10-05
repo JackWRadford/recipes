@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { AuthProvider } from "../context/AuthContext";
+import Layout from "../components/Layout";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
@@ -15,7 +16,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <title>Recipes</title>
       </Head>
       <AuthProvider>
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </AuthProvider>
     </>
   );

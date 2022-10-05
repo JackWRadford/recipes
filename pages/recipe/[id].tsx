@@ -1,8 +1,6 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
-import Footer from "../../components/footer/Footer";
-import Header from "../../components/header/Header";
 import ActionsRow from "../../components/recipePage/ActionsRow";
 import IngredientsList from "../../components/recipePage/IngredientsList";
 import InstructionsList from "../../components/recipePage/InstructionsList";
@@ -39,7 +37,6 @@ const RecipePage: NextPage = () => {
 
   return (
     <div>
-      <Header />
       {recipe && (
         <div className={styles.wrapper}>
           {user && user.uid === recipe.userId && <ActionsRow recipe={recipe} />}
@@ -50,7 +47,6 @@ const RecipePage: NextPage = () => {
           </div>
         </div>
       )}
-      <Footer />
     </div>
   );
 };
