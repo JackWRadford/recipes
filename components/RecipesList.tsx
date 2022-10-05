@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { Recipe } from "../models/Recipe";
+import { Recipe } from "../models/recipe";
 import styles from "../styles/RecipesList.module.css";
 import RecipeCard from "./RecipeCard";
-import Button from "./shared/Button";
+import Button from "./ui/Button";
 
 interface IRecipesListProps {
   recipes: Recipe[];
@@ -11,6 +11,9 @@ interface IRecipesListProps {
   isLoading: boolean;
 }
 
+/**
+ * Builds a list of the given `recipes`. Includes a button that calls `loadMore` to get more recipes, unless there are `noMoreRecipes`.
+ */
 const RecipesList: FC<IRecipesListProps> = ({
   recipes,
   loadMore,

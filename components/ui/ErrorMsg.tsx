@@ -5,6 +5,9 @@ interface ErrorMsgProps {
   message: string;
 }
 
+/**
+ * Error area used in forms across the app. Shows the given `message`.
+ */
 const ErrorMsg: FC<ErrorMsgProps> = ({ message }) => {
   return (
     <div className={styles.wrapper}>

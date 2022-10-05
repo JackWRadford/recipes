@@ -1,16 +1,17 @@
-import { deleteDoc, doc } from "firebase/firestore/lite";
 import { useRouter } from "next/router";
 import { FC, useState } from "react";
-import { db } from "../../firebaseConfig";
-import { Recipe } from "../../models/Recipe";
+import { Recipe } from "../../models/recipe";
 import styles from "../../styles/ActionsRow.module.css";
-import Button from "../shared/Button";
+import Button from "../ui/Button";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
 
 interface IActionsRow {
   recipe: Recipe;
 }
 
+/**
+ * Includes delete and edit options for the `recipe`
+ */
 const ActionsRow: FC<IActionsRow> = ({ recipe }) => {
   const router = useRouter();
   const [showConfirmModal, setShowConfirmModal] = useState(false);

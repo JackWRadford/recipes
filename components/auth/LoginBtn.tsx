@@ -1,7 +1,10 @@
 import { useState } from "react";
-import Button from "../shared/Button";
+import Button from "../ui/Button";
 import SignUpModal from "./AuthModal";
 
+/**
+ * Shows the authentication modal in sign up mode
+ */
 const LoginBtn = () => {
   let [showModalState, setModalState] = useState(false);
 

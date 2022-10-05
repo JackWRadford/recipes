@@ -5,6 +5,9 @@ interface IIngredientsProps {
   ingredients: string[];
 }
 
+/**
+ * List of the recipe's `ingredients`
+ */
 const IngredientsList: FC<IIngredientsProps> = ({ ingredients }) => {
   const ingredientItems = ingredients.map((e, index) => (
     <li key={index}>{e}</li>

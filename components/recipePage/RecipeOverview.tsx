@@ -1,12 +1,15 @@
 import { FC } from "react";
-import { secondsToHoursMinutes } from "../../helper/ConvertionHelpers";
-import { Recipe } from "../../models/Recipe";
+import { secondsToHoursMinutes } from "../../helper/convertion_helpers";
+import { Recipe } from "../../models/recipe";
 import styles from "../../styles/RecipeOverview.module.css";
 
 interface IRecipeOverviewProps {
   recipe: Recipe;
 }
 
+/**
+ * Overview details about the recipe, including: Name, description, cookingTime and difficulty.
+ */
 const RecipeOverview: FC<IRecipeOverviewProps> = ({ recipe }) => {
   return (
     <div className={styles.wrapper}>

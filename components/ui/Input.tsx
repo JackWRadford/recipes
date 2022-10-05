@@ -9,6 +9,9 @@ interface InputProps {
   onChange: ChangeEventHandler<HTMLInputElement>;
 }
 
+/**
+ * Generic input to be used throughout the app.
+ */
 const Input: FC<InputProps> = ({
   type,
   name,

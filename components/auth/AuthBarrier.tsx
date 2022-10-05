@@ -5,6 +5,9 @@ interface IAuthBarrier {
   label: string;
 }
 
+/**
+ * Alerts the user that the action, decribed by `label`, required authentication.
+ */
 const AuthBarrier: FC<IAuthBarrier> = ({ label }) => {
   return (
     <div className={styles.wrapper}>

@@ -1,8 +1,11 @@
 import { useState } from "react";
-import Button from "../shared/Button";
+import Button from "../ui/Button";
 import SignUpModal from "./AuthModal";
 import styles from "../../styles/CallToActionBtn.module.css";
 
+/**
+ * Show authentication modal in sign up mode
+ */
 const SignUpBtn = () => {
   let [showModalState, setModalState] = useState(false);
 

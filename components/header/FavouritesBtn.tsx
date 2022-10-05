@@ -1,13 +1,16 @@
 import { useRouter } from "next/router";
 import { FC } from "react";
 import { FaBookmark } from "react-icons/fa";
-import Button from "../shared/Button";
+import Button from "../ui/Button";
 
-interface IUserSaveRecipesBtnProps {
+interface IFavouritesBtnProps {
   isMobile: boolean;
 }
 
-const UserSavedRecipesBtn: FC<IUserSaveRecipesBtnProps> = ({ isMobile }) => {
+/**
+ * Navigates to the favourites page
+ */
+const FavouritesBtn: FC<IFavouritesBtnProps> = ({ isMobile }) => {
   const router = useRouter();
 
   return isMobile ? (
@@ -22,4 +25,4 @@ const UserSavedRecipesBtn: FC<IUserSaveRecipesBtnProps> = ({ isMobile }) => {
   );
 };
 
-export default UserSavedRecipesBtn;
+export default FavouritesBtn;

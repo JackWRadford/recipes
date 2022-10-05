@@ -1,13 +1,16 @@
 import { useRouter } from "next/router";
 import { FC } from "react";
 import { FaThList } from "react-icons/fa";
-import Button from "../shared/Button";
+import Button from "../ui/Button";
 
-interface IUserRecipesBtnProps {
+interface IPublishedBtnProps {
   isMobile: boolean;
 }
 
-const UserRecipesBtn: FC<IUserRecipesBtnProps> = ({ isMobile }) => {
+/**
+ * Navigates to the published page
+ */
+const PublishedBtn: FC<IPublishedBtnProps> = ({ isMobile }) => {
   const router = useRouter();
 
   return isMobile ? (
@@ -22,4 +25,4 @@ const UserRecipesBtn: FC<IUserRecipesBtnProps> = ({ isMobile }) => {
   );
 };
 
-export default UserRecipesBtn;
+export default PublishedBtn;

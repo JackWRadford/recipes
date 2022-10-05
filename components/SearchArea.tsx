@@ -1,13 +1,16 @@
-import { ChangeEvent, FC, FormEventHandler, useState } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import styles from "../styles/SearchArea.module.css";
-import Button from "./shared/Button";
-import Input from "./shared/Input";
+import Button from "./ui/Button";
+import Input from "./ui/Input";
 
 interface ISearchAreaProps {
   onSubmit: (query: string) => void;
   isLoading: boolean;
 }
 
+/**
+ * Includes a search bar and button that calls `onSubmit`.
+ */
 const SearchArea: FC<ISearchAreaProps> = ({ onSubmit, isLoading }) => {
   const [searchValue, setSearchValue] = useState("");
 

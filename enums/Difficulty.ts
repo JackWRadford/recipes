@@ -1,3 +1,6 @@
+/**
+ * The recipe difficulty.
+ */
 enum Difficulty {
   easy = "easy",
   medium = "medium",

@@ -11,6 +11,9 @@ interface ButtonProps {
   isLoading?: boolean;
 }
 
+/**
+ * Generic button to be used thoughout the app. Shows a loading indicator instead of the `label` if `isLoading` is true
+ */
 const Button: FC<ButtonProps> = ({
   type,
   name,

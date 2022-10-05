@@ -1,12 +1,15 @@
 import { ChangeEvent, FC } from "react";
 import styles from "../../styles/DurationInput.module.css";
-import Input from "../shared/Input";
+import Input from "../ui/Input";
 
 interface IDurationInput {
   seconds: number;
   setSeconds: (value: number) => void;
 }
 
+/**
+ * Takes and displays duration input in minutes, but, handles the duration in seconds.
+ */
 const DurationInput: FC<IDurationInput> = ({ seconds, setSeconds }) => {
   return (
     <>

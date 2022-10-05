@@ -1,24 +1,16 @@
-import {
-  collection,
-  getDocs,
-  limit,
-  orderBy,
-  query,
-  QueryDocumentSnapshot,
-  startAfter,
-  where,
-} from "firebase/firestore/lite";
+import { QueryDocumentSnapshot } from "firebase/firestore/lite";
 import { NextPage } from "next";
 import { useContext, useEffect, useState } from "react";
 import AuthBarrier from "../components/auth/AuthBarrier";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
 import RecipesList from "../components/RecipesList";
 import { AuthContext } from "../context/AuthContext";
-import { db } from "../firebaseConfig";
-import { Recipe, recipeConverter } from "../models/Recipe";
+import { Recipe } from "../models/recipe";
+import { fetchRecipes } from "../services/db_service";
 import styles from "../styles/PublishedPage.module.css";
 
+/**
+ * Page to show users published recipes.
+ */
 const PublishedPage: NextPage = () => {
   const { user } = useContext(AuthContext);
   const [published, setPublished] = useState<Recipe[]>([]);
@@ -26,63 +18,47 @@ const PublishedPage: NextPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const fetchPublished = async () => {
+    /**
+     * Fetch users published recipes.
+     */
+    const getPublished = async () => {
       if (!user) return;
-      console.log("FIRESTORE: fetchPublished");
-
-      const queryFirst = query(
-        collection(db, "recipes").withConverter(recipeConverter),
-        where("userId", "==", user?.uid),
-        limit(6)
-      );
-      const recipesSnapshots = await getDocs(queryFirst);
-      const lastVisible =
-        recipesSnapshots.docs[recipesSnapshots.docs.length - 1];
-      const recipesList = recipesSnapshots.docs.map((doc) => doc.data());
-      setLastRecipe(lastVisible);
-      setPublished(recipesList);
-      return recipesList;
+      const { recipes, last } = await fetchRecipes(undefined, user?.uid);
+      setLastRecipe(last);
+      setPublished(recipes);
     };
 
-    fetchPublished();
+    getPublished();
   }, [user]);
 
+  /**
+   * Load more of the users published recipes. (recipes after lastRecipe)
+   */
   const loadMore = async () => {
     if (!lastRecipe) return;
     setIsLoading(true);
-    console.log("FIRESTORE: fetchPublished");
-    const recipesQueryNext = query(
-      collection(db, "recipes").withConverter(recipeConverter),
-      where("userId", "==", user?.uid),
-      startAfter(lastRecipe),
-      limit(6)
+    const { recipes, last } = await fetchRecipes(
+      undefined,
+      user?.uid,
+      lastRecipe
     );
-    const recipesSnapshots = await getDocs(recipesQueryNext);
-    const lastVisible = recipesSnapshots.docs[recipesSnapshots.docs.length - 1];
-    const recipesList = recipesSnapshots.docs.map((doc) => doc.data());
-    setLastRecipe(lastVisible);
-    setPublished((oldRecipes) => [...oldRecipes, ...recipesList]);
+    setLastRecipe(last);
+    setPublished((oldRecipes) => [...oldRecipes, ...recipes]);
     setIsLoading(false);
   };
 
-  return (
-    <>
-      <Header />
-      {user ? (
-        <div className={styles.contentWrapper}>
-          <h2>Your recipes</h2>
-          <RecipesList
-            recipes={published}
-            loadMore={loadMore}
-            noMoreRecipes={typeof lastRecipe === "undefined"}
-            isLoading={isLoading}
-          />
-        </div>
-      ) : (
-        <AuthBarrier label={"see your recipes"} />
-      )}
-      <Footer />
-    </>
+  return user ? (
+    <div className={styles.contentWrapper}>
+      <h2>Your recipes</h2>
+      <RecipesList
+        recipes={published}
+        loadMore={loadMore}
+        noMoreRecipes={typeof lastRecipe === "undefined"}
+        isLoading={isLoading}
+      />
+    </div>
+  ) : (
+    <AuthBarrier label={"see your recipes"} />
   );
 };
 

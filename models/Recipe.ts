@@ -3,7 +3,7 @@ import {
   QueryDocumentSnapshot,
   WithFieldValue,
 } from "firebase/firestore/lite";
-import Difficulty from "../enums/Difficulty";
+import Difficulty from "../enums/difficulty";
 
 class Recipe {
   constructor(
@@ -21,7 +21,9 @@ class Recipe {
   ) {}
 }
 
-/// Convert to and from Firestore and Recipe model
+/**
+ * Convert to and from Firestore and Recipe model
+ */
 const recipeConverter = {
   toFirestore(recipe: WithFieldValue<Recipe>): DocumentData {
     return {
