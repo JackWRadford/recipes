@@ -13,14 +13,20 @@ import styles from "../styles/HomePage.module.css";
 const HomePage: NextPage = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [lastRecipe, setLastRecipe] = useState<QueryDocumentSnapshot<Recipe>>();
-  const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getRecipes = async () => {
-      const { recipes, last } = await fetchRecipes();
-      setLastRecipe(last);
-      setRecipes(recipes);
+      setIsLoading(true);
+      try {
+        const { recipes, last } = await fetchRecipes();
+        setLastRecipe(last);
+        setRecipes(recipes);
+      } catch (error) {
+        console.log("Error when loading initial recipes");
+      }
+      setIsLoading(false);
     };
     getRecipes();
   }, []);

@@ -28,6 +28,7 @@ const FavouritesPage: NextPage = () => {
         setFavourites([]);
         return;
       }
+      setIsLoading(true);
       try {
         const { recipes, last } = await fetchRecipes(favs);
         setIsFirstLoad(false);
@@ -36,6 +37,7 @@ const FavouritesPage: NextPage = () => {
       } catch (error) {
         console.log("Error when fetching favourite recipes.");
       }
+      setIsLoading(false);
     };
 
     getFavourites();

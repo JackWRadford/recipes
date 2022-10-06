@@ -23,9 +23,11 @@ const PublishedPage: NextPage = () => {
      */
     const getPublished = async () => {
       if (!user) return;
+      setIsLoading(true);
       const { recipes, last } = await fetchRecipes(undefined, user?.uid);
       setLastRecipe(last);
       setPublished(recipes);
+      setIsLoading(false);
     };
 
     getPublished();
