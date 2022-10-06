@@ -143,13 +143,15 @@ export const fetchRecipes = async (
  * Add the new `recipe` to the recipes collection.
  *
  * @param recipe - New recipe
+ * @returns The id of the new recipe doc in the recipes collections
  */
-export const addRecipe = async (recipe: Recipe) => {
+export const addRecipe = async (recipe: Recipe): Promise<string> => {
   console.log("FIRESTORE: addRecipe");
-  await addDoc(
+  const recipeDoc = await addDoc(
     collection(db, RECIPES_COL).withConverter(recipeConverter),
     recipe
   );
+  return recipeDoc.id;
 };
 
 /**

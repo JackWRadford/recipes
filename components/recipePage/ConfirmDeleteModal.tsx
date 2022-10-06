@@ -22,6 +22,7 @@ const ConfirmDeleteModal: FC<IConfirmDeleteModalProps> = ({
   const [isLoading, setIsLoading] = useState(false);
 
   /**
+
    * Delete the `recipe`.
    */
   const onDeleteHandler = async () => {
@@ -43,7 +44,7 @@ const ConfirmDeleteModal: FC<IConfirmDeleteModalProps> = ({
         <div className={styles.wrapper}>
           <p>
             {
-              "Are you sure? Once deleted you cannot recover this recipes's data!"
+              "Are you sure? Once deleted you cannot recover this recipes' data!"
             }
           </p>
           <Button
