@@ -5,7 +5,7 @@ import AuthBarrier from "../components/auth/AuthBarrier";
 import RecipesList from "../components/RecipesList";
 import { AuthContext } from "../context/AuthContext";
 import { Recipe } from "../models/recipe";
-import { fetchRecipes } from "../services/db_service";
+import { fetchRecipes, RECIPE_FETCH_LIMIT } from "../services/db_service";
 import styles from "../styles/PublishedPage.module.css";
 
 /**
@@ -16,6 +16,7 @@ const PublishedPage: NextPage = () => {
   const [published, setPublished] = useState<Recipe[]>([]);
   const [lastRecipe, setLastRecipe] = useState<QueryDocumentSnapshot<Recipe>>();
   const [isLoading, setIsLoading] = useState(false);
+  const [noMoreRecipes, setNoMoreRecipes] = useState(false);
 
   useEffect(() => {
     /**
@@ -27,6 +28,7 @@ const PublishedPage: NextPage = () => {
       const { recipes, last } = await fetchRecipes(undefined, user?.uid);
       setLastRecipe(last);
       setPublished(recipes);
+      setNoMoreRecipes(recipes.length < RECIPE_FETCH_LIMIT);
       setIsLoading(false);
     };
 
@@ -46,6 +48,7 @@ const PublishedPage: NextPage = () => {
     );
     setLastRecipe(last);
     setPublished((oldRecipes) => [...oldRecipes, ...recipes]);
+    setNoMoreRecipes(recipes.length < RECIPE_FETCH_LIMIT);
     setIsLoading(false);
   };
 
@@ -55,7 +58,7 @@ const PublishedPage: NextPage = () => {
       <RecipesList
         recipes={published}
         loadMore={loadMore}
-        noMoreRecipes={typeof lastRecipe === "undefined"}
+        noMoreRecipes={noMoreRecipes}
         isLoading={isLoading}
       />
     </div>

@@ -9,7 +9,6 @@ import {
   limit,
   query,
   QueryDocumentSnapshot,
-  QuerySnapshot,
   setDoc,
   where,
   startAfter,
@@ -20,9 +19,9 @@ import { db } from "../firebaseConfig";
 import { Recipe, recipeConverter } from "../models/recipe";
 
 /** Users firestore collection identifier */
-export const USERS_COL = "users";
+const USERS_COL = "users";
 /** Recipes firestore collection identifier */
-export const RECIPES_COL = "recipes";
+const RECIPES_COL = "recipes";
 
 /** The limit for pageination when fetching recipes */
 export const RECIPE_FETCH_LIMIT = 6;

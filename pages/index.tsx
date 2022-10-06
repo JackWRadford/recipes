@@ -4,17 +4,18 @@ import { useEffect, useState } from "react";
 import RecipesList from "../components/RecipesList";
 import SearchArea from "../components/SearchArea";
 import { Recipe } from "../models/recipe";
-import { fetchRecipes } from "../services/db_service";
+import { fetchRecipes, RECIPE_FETCH_LIMIT } from "../services/db_service";
 import styles from "../styles/HomePage.module.css";
 
 /**
  * Page that shows recipes and search option.
  */
 const HomePage: NextPage = () => {
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [recipesList, setRecipes] = useState<Recipe[]>([]);
   const [lastRecipe, setLastRecipe] = useState<QueryDocumentSnapshot<Recipe>>();
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [noMoreRecipes, setNoMoreRecipes] = useState(false);
 
   useEffect(() => {
     const getRecipes = async () => {
@@ -23,6 +24,7 @@ const HomePage: NextPage = () => {
         const { recipes, last } = await fetchRecipes();
         setLastRecipe(last);
         setRecipes(recipes);
+        setNoMoreRecipes(recipes.length < RECIPE_FETCH_LIMIT);
       } catch (error) {
         console.log("Error when loading initial recipes");
       }
@@ -45,6 +47,7 @@ const HomePage: NextPage = () => {
     );
     setLastRecipe(last);
     setRecipes((oldRecipes) => [...oldRecipes, ...recipes]);
+    setNoMoreRecipes(recipes.length < RECIPE_FETCH_LIMIT);
     setIsLoading(false);
   };
 
@@ -65,15 +68,16 @@ const HomePage: NextPage = () => {
     setLastRecipe(last);
     setRecipes(recipes);
     setSearchTerm(userQuery);
+    setNoMoreRecipes(recipes.length < RECIPE_FETCH_LIMIT);
     setIsLoading(false);
   };
 
   return (
     <div className={styles.contentWrapper}>
       <RecipesList
-        recipes={recipes}
+        recipes={recipesList}
         loadMore={loadMore}
-        noMoreRecipes={typeof lastRecipe === "undefined"}
+        noMoreRecipes={noMoreRecipes}
         isLoading={isLoading}
       />
       <SearchArea onSubmit={onSearchHandler} isLoading={isLoading} />
