@@ -6,3 +6,8 @@
   background-color: black;
   cursor: pointer;
 }
+
+.secondary {
+  background-color: transparent;
+  color: black;
+}

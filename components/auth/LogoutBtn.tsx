@@ -26,6 +26,7 @@ const LogoutBtn: FC<ILogoutBtnProps> = ({ isMobile }) => {
     <FaSignOutAlt onClick={clickHandler} />
   ) : (
     <Button
+      secondary={true}
       type={"button"}
       name={"logout"}
       label={"Logout"}

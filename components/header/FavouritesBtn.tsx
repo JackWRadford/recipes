@@ -17,6 +17,7 @@ const FavouritesBtn: FC<IFavouritesBtnProps> = ({ isMobile }) => {
     <FaBookmark onClick={() => router.push("/favourites")} />
   ) : (
     <Button
+      secondary={true}
       type={"button"}
       name={"savedrecipes"}
       label={"Favourites"}

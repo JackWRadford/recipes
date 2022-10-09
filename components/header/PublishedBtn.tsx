@@ -17,6 +17,7 @@ const PublishedBtn: FC<IPublishedBtnProps> = ({ isMobile }) => {
     <FaThList onClick={() => router.push("/published")} />
   ) : (
     <Button
+      secondary={true}
       type={"button"}
       name={"yourrecipes"}
       label={"Published"}

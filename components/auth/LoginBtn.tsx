@@ -20,6 +20,7 @@ const LoginBtn = () => {
     <>
       {showModalState && <SignUpModal isSignUp={false} onClose={closeHander} />}
       <Button
+        secondary={true}
         type={"button"}
         name={"login"}
         label={"Login"}
