@@ -23,9 +23,3 @@
   align-items: center;
   cursor: pointer;
 }
-
-@media (max-width: 700px) {
-  .navContainer {
-    gap: 2rem;
-  }
-}

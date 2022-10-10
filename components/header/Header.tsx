@@ -9,6 +9,7 @@ import AddRecipeBtn from "./AddRecipeBtn";
 import PublishedBtn from "./PublishedBtn";
 import FavouritesBtn from "./FavouritesBtn";
 import ThemeBtn from "./themeBtn";
+import MenuBtn from "./MenuBtn";
 
 /**
  * Application header
@@ -35,20 +36,23 @@ const Header = () => {
       <div className={styles.content}>
         <Link href={"/"}>
           <div className={styles.logoContainer}>
-            <h1>🧑‍🍳{!isMobile && " Recipes"}</h1>
+            <h1>🧑‍🍳Recipes</h1>
           </div>
         </Link>
         <div className={styles.navContainer}>
-          {!user ? (
+          {isMobile ? (
+            <MenuBtn />
+          ) : !user ? (
             <>
               <LoginBtn />
               <SignUpBtn />
+              <ThemeBtn />
             </>
           ) : (
             <>
-              <FavouritesBtn isMobile={isMobile} />
-              <PublishedBtn isMobile={isMobile} />
-              <LogoutBtn isMobile={isMobile} />
+              <FavouritesBtn />
+              <PublishedBtn />
+              <LogoutBtn />
               <AddRecipeBtn />
               <ThemeBtn />
             </>

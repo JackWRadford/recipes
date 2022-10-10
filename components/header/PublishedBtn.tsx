@@ -1,27 +1,29 @@
 import { useRouter } from "next/router";
 import { FC } from "react";
-import { FaThList } from "react-icons/fa";
 import Button from "../ui/Button";
 
 interface IPublishedBtnProps {
-  isMobile: boolean;
+  closeSidebar?: () => void;
 }
 
 /**
  * Navigates to the published page
  */
-const PublishedBtn: FC<IPublishedBtnProps> = ({ isMobile }) => {
+const PublishedBtn: FC<IPublishedBtnProps> = ({ closeSidebar }) => {
   const router = useRouter();
 
-  return isMobile ? (
-    <FaThList onClick={() => router.push("/published")} />
-  ) : (
+  const onClickHandler = () => {
+    if (closeSidebar) closeSidebar();
+    router.push("/published");
+  };
+
+  return (
     <Button
       secondary={true}
       type={"button"}
       name={"yourrecipes"}
       label={"Published"}
-      onClick={() => router.push("/published")}
+      onClick={onClickHandler}
     />
   );
 };
