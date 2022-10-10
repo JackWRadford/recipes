@@ -1,0 +1,26 @@
+export const themes = {
+  dark: {
+    textColor: "white",
+    textColorHL: "black",
+    backgroundColor: "#121212",
+    buttonColor: "white",
+    cardColor: "#191919",
+    cardColorHL: "white",
+    shadow: "none",
+    myRed: "rgb(255, 48, 48)",
+    myLightRed: "rgb(105, 39, 39)",
+    myGrey: "grey",
+  },
+  light: {
+    textColor: "black",
+    textColorHL: "white",
+    backgroundColor: "rgb(246, 243, 243)",
+    buttonColor: "black",
+    cardColor: "white",
+    cardColorHL: "black",
+    shadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+    myRed: "rgb(255, 48, 48)",
+    myLightRed: "rgb(255, 235, 235)",
+    myGrey: "grey",
+  },
+};

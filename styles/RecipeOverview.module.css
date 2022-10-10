@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   gap: 2rem;
-  background-color: white;
+  background-color: var(--cardColor);
   border-radius: 14px;
   padding: 1rem;
   box-shadow: var(--shadow);

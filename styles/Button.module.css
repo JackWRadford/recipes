@@ -2,12 +2,12 @@
   padding: 1rem;
   border: none;
   border-radius: 14px;
-  color: white;
-  background-color: black;
+  color: var(--textColorHL);
+  background-color: var(--buttonColor);
   cursor: pointer;
 }
 
 .secondary {
   background-color: transparent;
-  color: black;
+  color: var(--textColor);
 }

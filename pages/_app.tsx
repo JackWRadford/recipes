@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import { AuthProvider } from "../context/AuthContext";
 import Layout from "../components/Layout";
+import { ThemeProvider } from "../context/ThemeContext";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
@@ -15,11 +16,13 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <meta name="description" content="Share and discover great recipes!" />
         <title>Recipes</title>
       </Head>
-      <AuthProvider>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </AuthProvider>
+      </ThemeProvider>
     </>
   );
 };

@@ -1,7 +1,8 @@
 .input {
   padding: 1rem 1rem;
   border: none;
-  background-color: white;
+  background-color: var(--cardColor);
+  color: var(--textColor);
   border-radius: 14px;
   outline: none;
 }
