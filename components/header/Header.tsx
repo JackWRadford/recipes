@@ -8,6 +8,7 @@ import SignUpBtn from "../auth/SignUpBtn";
 import AddRecipeBtn from "./AddRecipeBtn";
 import PublishedBtn from "./PublishedBtn";
 import FavouritesBtn from "./FavouritesBtn";
+import ThemeBtn from "./themeBtn";
 
 /**
  * Application header
@@ -49,6 +50,7 @@ const Header = () => {
               <PublishedBtn isMobile={isMobile} />
               <LogoutBtn isMobile={isMobile} />
               <AddRecipeBtn />
+              <ThemeBtn />
             </>
           )}
         </div>
