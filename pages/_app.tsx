@@ -11,7 +11,10 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       <Head>
         <meta charSet="utf-8" />
         <link rel="icon" href="/favicon.ico" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"
+        />
         <meta name="theme-color" content="white" />
         <meta name="description" content="Share and discover great recipes!" />
         <title>Recipes</title>
