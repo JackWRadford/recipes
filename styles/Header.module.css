@@ -23,3 +23,10 @@
   align-items: center;
   cursor: pointer;
 }
+
+.headerMenu {
+  display: flex;
+  flex-direction: column;
+  padding: 0 2rem 1rem 2rem;
+  background-color: var(--cardColor);
+}

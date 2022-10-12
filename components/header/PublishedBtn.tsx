@@ -2,18 +2,13 @@ import { useRouter } from "next/router";
 import { FC } from "react";
 import Button from "../ui/Button";
 
-interface IPublishedBtnProps {
-  closeSidebar?: () => void;
-}
-
 /**
  * Navigates to the published page
  */
-const PublishedBtn: FC<IPublishedBtnProps> = ({ closeSidebar }) => {
+const PublishedBtn = () => {
   const router = useRouter();
 
   const onClickHandler = () => {
-    if (closeSidebar) closeSidebar();
     router.push("/published");
   };
 

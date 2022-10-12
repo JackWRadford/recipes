@@ -3,18 +3,13 @@ import Button from "../ui/Button";
 import styles from "../../styles/CallToActionBtn.module.css";
 import { FC } from "react";
 
-interface IAddRecipeBtnProps {
-  closeSidebar?: () => void;
-}
-
 /**
  * Button to navigate to manage page with no recipe data (to add a new recipe)
  */
-const AddRecipeBtn: FC<IAddRecipeBtnProps> = ({ closeSidebar }) => {
+const AddRecipeBtn = () => {
   const router = useRouter();
 
   const onClickHandler = () => {
-    if (closeSidebar) closeSidebar();
     router.push("/manage");
   };
 
