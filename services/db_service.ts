@@ -124,7 +124,11 @@ export const fetchRecipes = async (
   // Add where recipe nameKeyTerms includes one or more of the searchTerms (for search)
   if (searchTerm)
     queryContraints.push(
-      where("nameKeyTerms", "array-contains-any", searchTerm.split(" "))
+      where(
+        "nameKeyTerms",
+        "array-contains-any",
+        searchTerm.toLowerCase().split(" ")
+      )
     );
   // Add startAfter (for pageination)
   if (lastRecipe) queryContraints.push(startAfter(lastRecipe));
