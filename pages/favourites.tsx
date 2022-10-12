@@ -5,7 +5,7 @@ import AuthBarrier from "../components/auth/AuthBarrier";
 import RecipesList from "../components/RecipesList";
 import { AuthContext } from "../context/AuthContext";
 import { Recipe } from "../models/recipe";
-import { fetchRecipes } from "../services/db_service";
+import { fetchRecipes, RECIPE_FETCH_LIMIT } from "../services/db_service";
 import styles from "../styles/FavouritesPage.module.css";
 
 /**
@@ -17,6 +17,7 @@ const FavouritesPage: NextPage = () => {
   const [lastRecipe, setLastRecipe] = useState<QueryDocumentSnapshot<Recipe>>();
   const [isLoading, setIsLoading] = useState(false);
   const [isFirstLoad, setIsFirstLoad] = useState(true);
+  const [noMoreRecipes, setNoMoreRecipes] = useState(false);
 
   useEffect(() => {
     /**
@@ -28,14 +29,17 @@ const FavouritesPage: NextPage = () => {
         setFavourites([]);
         return;
       }
+      setIsLoading(true);
       try {
         const { recipes, last } = await fetchRecipes(favs);
         setIsFirstLoad(false);
         setLastRecipe(last);
         setFavourites(recipes);
+        setNoMoreRecipes(recipes.length < RECIPE_FETCH_LIMIT);
       } catch (error) {
         console.log("Error when fetching favourite recipes.");
       }
+      setIsLoading(false);
     };
 
     getFavourites();
@@ -51,6 +55,7 @@ const FavouritesPage: NextPage = () => {
       const { recipes, last } = await fetchRecipes(favs, undefined, lastRecipe);
       setLastRecipe(last);
       setFavourites((oldRecipes) => [...oldRecipes, ...recipes]);
+      setNoMoreRecipes(recipes.length < RECIPE_FETCH_LIMIT);
     } catch (error) {
       console.log("Error loading more recipes.");
     }
@@ -63,7 +68,7 @@ const FavouritesPage: NextPage = () => {
       <RecipesList
         recipes={favourites}
         loadMore={loadMore}
-        noMoreRecipes={typeof lastRecipe === "undefined"}
+        noMoreRecipes={noMoreRecipes}
         isLoading={isLoading}
       />
     </div>

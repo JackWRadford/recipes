@@ -3,6 +3,7 @@ import { Recipe } from "../models/recipe";
 import styles from "../styles/RecipesList.module.css";
 import RecipeCard from "./RecipeCard";
 import Button from "./ui/Button";
+import LoadingIndicator from "./ui/LoadingIndicator";
 
 interface IRecipesListProps {
   recipes: Recipe[];
@@ -22,7 +23,14 @@ const RecipesList: FC<IRecipesListProps> = ({
 }) => {
   return (
     <div className={styles.wrapper}>
-      {!recipes.length && <p className={styles.noRecipes}>No recipes found</p>}
+      {!recipes.length &&
+        (isLoading ? (
+          <div className={styles.loading}>
+            <LoadingIndicator />
+          </div>
+        ) : (
+          <p className={styles.noRecipes}>No recipes found</p>
+        ))}
       {recipes.map((r) => (
         <RecipeCard key={r.id} recipe={r} />
       ))}

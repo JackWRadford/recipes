@@ -23,3 +23,7 @@
 .loadMore p {
   color: gray;
 }
+
+.loading {
+  margin-top: 1rem;
+}

@@ -1,6 +1,4 @@
-import { deleteDoc, doc } from "firebase/firestore/lite";
 import { FC, useState } from "react";
-import { db } from "../../firebaseConfig";
 import { Recipe } from "../../models/recipe";
 import Button from "../ui/Button";
 import Modal from "../ui/Modal";
@@ -22,6 +20,7 @@ const ConfirmDeleteModal: FC<IConfirmDeleteModalProps> = ({
   const [isLoading, setIsLoading] = useState(false);
 
   /**
+
    * Delete the `recipe`.
    */
   const onDeleteHandler = async () => {
@@ -43,7 +42,7 @@ const ConfirmDeleteModal: FC<IConfirmDeleteModalProps> = ({
         <div className={styles.wrapper}>
           <p>
             {
-              "Are you sure? Once deleted you cannot recover this recipes's data!"
+              "Are you sure? Once deleted you cannot recover this recipes' data!"
             }
           </p>
           <Button

@@ -6,8 +6,10 @@ import LoginBtn from "../auth/LoginBtn";
 import LogoutBtn from "../auth/LogoutBtn";
 import SignUpBtn from "../auth/SignUpBtn";
 import AddRecipeBtn from "./AddRecipeBtn";
-import UserRecipesBtn from "./PublishedBtn";
-import UserSavedRecipesBtn from "./FavouritesBtn";
+import PublishedBtn from "./PublishedBtn";
+import FavouritesBtn from "./FavouritesBtn";
+import ThemeBtn from "./ThemeBtn";
+import MenuBtn from "./MenuBtn";
 
 /**
  * Application header
@@ -34,21 +36,25 @@ const Header = () => {
       <div className={styles.content}>
         <Link href={"/"}>
           <div className={styles.logoContainer}>
-            <h1>🧑‍🍳{!isMobile && " Recipes"}</h1>
+            <h1>🧑‍🍳Recipes</h1>
           </div>
         </Link>
         <div className={styles.navContainer}>
-          {!user ? (
+          {isMobile ? (
+            <MenuBtn />
+          ) : !user ? (
             <>
               <LoginBtn />
               <SignUpBtn />
+              <ThemeBtn />
             </>
           ) : (
             <>
-              <UserSavedRecipesBtn isMobile={isMobile} />
-              <UserRecipesBtn isMobile={isMobile} />
-              <LogoutBtn isMobile={isMobile} />
+              <FavouritesBtn />
+              <PublishedBtn />
+              <LogoutBtn />
               <AddRecipeBtn />
+              <ThemeBtn />
             </>
           )}
         </div>

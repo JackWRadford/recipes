@@ -9,7 +9,6 @@ import {
   limit,
   query,
   QueryDocumentSnapshot,
-  QuerySnapshot,
   setDoc,
   where,
   startAfter,
@@ -20,9 +19,9 @@ import { db } from "../firebaseConfig";
 import { Recipe, recipeConverter } from "../models/recipe";
 
 /** Users firestore collection identifier */
-export const USERS_COL = "users";
+const USERS_COL = "users";
 /** Recipes firestore collection identifier */
-export const RECIPES_COL = "recipes";
+const RECIPES_COL = "recipes";
 
 /** The limit for pageination when fetching recipes */
 export const RECIPE_FETCH_LIMIT = 6;
@@ -143,13 +142,15 @@ export const fetchRecipes = async (
  * Add the new `recipe` to the recipes collection.
  *
  * @param recipe - New recipe
+ * @returns The id of the new recipe doc in the recipes collections
  */
-export const addRecipe = async (recipe: Recipe) => {
+export const addRecipe = async (recipe: Recipe): Promise<string> => {
   console.log("FIRESTORE: addRecipe");
-  await addDoc(
+  const recipeDoc = await addDoc(
     collection(db, RECIPES_COL).withConverter(recipeConverter),
     recipe
   );
+  return recipeDoc.id;
 };
 
 /**

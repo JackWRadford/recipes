@@ -1,0 +1,38 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0px;
+  left: 40%;
+  width: 60%;
+  height: 100%;
+  background-color: var(--backgroundColor);
+  padding: 1rem;
+  border-radius: 12px 0 0 12px;
+  z-index: 30;
+  box-shadow: var(--shadow);
+  animation: slide-left 300ms ease-out forwards;
+}
+
+.titleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.closeBtn {
+  cursor: pointer;
+}
+
+@keyframes slide-left {
+  from {
+    opacity: 0;
+    transform: translateX(+20rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

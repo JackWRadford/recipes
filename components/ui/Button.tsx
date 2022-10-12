@@ -9,6 +9,7 @@ interface ButtonProps {
   onClick?: MouseEventHandler<HTMLButtonElement>;
   className?: string;
   isLoading?: boolean;
+  secondary?: boolean;
 }
 
 /**
@@ -21,10 +22,13 @@ const Button: FC<ButtonProps> = ({
   onClick,
   className,
   isLoading = false,
+  secondary = false,
 }) => {
   return (
     <button
-      className={`${styles.button} ${className}`}
+      className={`${styles.button} ${className} ${
+        secondary ? styles.secondary : ""
+      }`}
       type={type}
       name={name}
       onClick={onClick}

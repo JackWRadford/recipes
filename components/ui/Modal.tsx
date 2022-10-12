@@ -2,13 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import { IoMdClose } from "react-icons/io";
 import styles from "../../styles/Modal.module.css";
-
-/**
- * Covers the whole window. Calls `onClick` when clicked.
- */
-const Backdrop: React.FC<{ onClick: () => void }> = (props) => {
-  return <div className={styles.backdrop} onClick={props.onClick} />;
-};
+import Backdrop from "./Backdrop";
 
 interface ModalOverlayProps {
   title: string;

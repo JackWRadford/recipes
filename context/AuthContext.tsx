@@ -1,7 +1,6 @@
-import React, { createContext, FC, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { User } from "firebase/auth";
-import { auth, db } from "../firebaseConfig";
-import { doc, getDoc } from "firebase/firestore/lite";
+import { auth } from "../firebaseConfig";
 import { fetchUserFavourites } from "../services/db_service";
 
 export interface IAuthContext {

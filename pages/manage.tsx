@@ -175,10 +175,14 @@ const ManagePage: FC<IManagePageProps & WithRouterProps> = ({ router }) => {
         setIsLoading(true);
         if (!recipe) {
           // Add new recipe
-          await addRecipe(newRecipe);
+          const newId = await addRecipe(newRecipe);
+          // Navigate to the new recipe
+          router.push(`/recipe/${newId}`);
         } else {
           // Update given recipe
           await updateRecipe(newRecipe);
+          // Navigate to the updated recipe
+          router.push(`/recipe/${newRecipe.id}`);
         }
       } catch (error) {
         console.log(error);
