@@ -8,7 +8,7 @@ import SignUpBtn from "../auth/SignUpBtn";
 import AddRecipeBtn from "./AddRecipeBtn";
 import PublishedBtn from "./PublishedBtn";
 import FavouritesBtn from "./FavouritesBtn";
-import ThemeBtn from "./themeBtn";
+import ThemeBtn from "./ThemeBtn";
 import MenuBtn from "./MenuBtn";
 
 /**

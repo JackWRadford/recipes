@@ -10,7 +10,7 @@ import Backdrop from "../ui/Backdrop";
 import AddRecipeBtn from "./AddRecipeBtn";
 import FavouritesBtn from "./FavouritesBtn";
 import PublishedBtn from "./PublishedBtn";
-import ThemeBtn from "./themeBtn";
+import ThemeBtn from "./ThemeBtn";
 
 interface ISidebar {
   onClose: () => void;

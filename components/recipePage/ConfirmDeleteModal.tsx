@@ -1,6 +1,4 @@
-import { deleteDoc, doc } from "firebase/firestore/lite";
 import { FC, useState } from "react";
-import { db } from "../../firebaseConfig";
 import { Recipe } from "../../models/recipe";
 import Button from "../ui/Button";
 import Modal from "../ui/Modal";
