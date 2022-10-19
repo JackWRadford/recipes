@@ -2,15 +2,8 @@ import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import styles from "../../styles/Header.module.css";
-import LoginBtn from "../auth/LoginBtn";
-import LogoutBtn from "../auth/LogoutBtn";
-import SignUpBtn from "../auth/SignUpBtn";
-import AddRecipeBtn from "./AddRecipeBtn";
-import PublishedBtn from "./PublishedBtn";
-import FavouritesBtn from "./FavouritesBtn";
 import ThemeBtn from "./ThemeBtn";
 import { FiMenu, FiX } from "react-icons/fi";
-import { User } from "firebase/auth";
 import HeaderActions from "./HeaderActions";
 
 /**
