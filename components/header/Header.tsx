@@ -32,13 +32,11 @@ const Header = () => {
   };
 
   return (
-    <>
+    <header>
       <div className={styles.wrapper}>
         <div className={styles.content}>
           <Link href={"/"}>
-            <div className={styles.logoContainer}>
-              <h1>Recipes</h1>
-            </div>
+            <div className={styles.logoContainer}>Recipes</div>
           </Link>
           <div className={styles.navContainer}>
             {isMobile ? (
@@ -64,7 +62,7 @@ const Header = () => {
           <HeaderActions user={user} />
         </div>
       )}
-    </>
+    </header>
   );
 };
 
