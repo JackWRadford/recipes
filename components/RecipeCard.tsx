@@ -3,7 +3,7 @@ import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import Link from "next/link";
 import { Recipe } from "../models/recipe";
 import React, { FC, useContext, useState } from "react";
-import { secondsToHoursMinutes } from "../helper/convertion_helpers";
+import { secondsToHoursMinutes } from "../helper/conversion_helpers";
 import { AuthContext } from "../context/AuthContext";
 import Modal from "./ui/Modal";
 import { updateUserFavourites } from "../services/db_service";

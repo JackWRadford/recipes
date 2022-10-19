@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { secondsToHoursMinutes } from "../../helper/convertion_helpers";
+import { secondsToHoursMinutes } from "../../helper/conversion_helpers";
 import { Recipe } from "../../models/recipe";
 import styles from "../../styles/RecipeOverview.module.css";
 
