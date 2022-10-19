@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import ActionsRow from "../../components/recipePage/ActionsRow";
@@ -36,18 +37,26 @@ const RecipePage: NextPage = () => {
   }, [router.asPath]);
 
   return (
-    <div>
+    <>
       {recipe && (
-        <div className={styles.wrapper}>
-          {user && user.uid === recipe.userId && <ActionsRow recipe={recipe} />}
-          <RecipeOverview recipe={recipe} />
-          <div className={styles.contentWrapper}>
-            <IngredientsList ingredients={recipe?.ingredients} />
-            <InstructionsList instructions={recipe?.instructions} />
+        <div>
+          <Head>
+            <title>{`${recipe.name} - Recipes`}</title>
+            <meta name="description" content={recipe.description} />
+          </Head>
+          <div className={styles.wrapper}>
+            {user && user.uid === recipe.userId && (
+              <ActionsRow recipe={recipe} />
+            )}
+            <RecipeOverview recipe={recipe} />
+            <div className={styles.contentWrapper}>
+              <IngredientsList ingredients={recipe?.ingredients} />
+              <InstructionsList instructions={recipe?.instructions} />
+            </div>
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
