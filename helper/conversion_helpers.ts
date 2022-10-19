@@ -7,7 +7,9 @@
 const secondsToHoursMinutes = (seconds: number): string => {
   const hours = Math.trunc(seconds / 3600);
   const minutes = Math.trunc((seconds % 3600) / 60);
-  return `${hours ? `${hours}h` : ""} ${minutes}m`;
+  return `${hours ? `${hours}h` : ""}${hours && minutes ? " " : ""}${
+    minutes ? `${minutes}m` : ""
+  }`;
 };
 
 export { secondsToHoursMinutes };

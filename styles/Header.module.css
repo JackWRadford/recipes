@@ -1,6 +1,7 @@
 .wrapper {
   display: flex;
   justify-content: center;
+  padding: 1rem 0;
   background-color: var(--cardColor);
   color: var(--textColor);
 }
@@ -15,6 +16,8 @@
 
 .logoContainer {
   cursor: pointer;
+  font-size: xx-large;
+  font-weight: bold;
 }
 
 .navContainer {

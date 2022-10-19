@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import { FC } from "react";
 import Button from "../ui/Button";
 
 /**
